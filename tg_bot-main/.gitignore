@@ -1,0 +1,14 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+/build/
+/id-547197664-username-Bohdan.json
+/id-1307390733-username-Remington.json
+/gradle/
+/.idea/
+/.gradle/
