@@ -24,13 +24,5 @@ public class KeyboardCreationService {
     }
 
     // Метод для створення кнопок
-    private List<InlineKeyboardButton> createButton(String command, String callBack) {
-        List<InlineKeyboardButton> rowInline = new ArrayList<>();
-        InlineKeyboardButton button = InlineKeyboardButton.builder()
-                .text(command)
-                .callbackData(callBack)
-                .build();
-        rowInline.add(button);
-        return rowInline;
-    }
+
 }
