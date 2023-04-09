@@ -10,8 +10,8 @@ public class Main {
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(new CurrencyBot());
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
+        } catch (TelegramApiException exc) {
+            exc.printStackTrace();
         }
     }
 }
