@@ -9,8 +9,9 @@ public class MenuCreationService extends BotCommand {
     public SendMessage getStartMenu(long chatId) {
         return SendMessage.builder()
                 .chatId(chatId)
-                .text("How can I help you?")
+                .text("Hi! "+"How can I help you?")
                 .replyMarkup(keyboardCreationService.getMainKeyboard())
                 .build();
     }
+
 }

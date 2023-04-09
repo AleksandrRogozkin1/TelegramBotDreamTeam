@@ -9,7 +9,6 @@ import java.util.List;
 public class KeyboardCreationService {
     public InlineKeyboardMarkup getMainKeyboard() {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-
         // Створення списку з кнопками
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
 

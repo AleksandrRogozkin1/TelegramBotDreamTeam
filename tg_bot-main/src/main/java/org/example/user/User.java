@@ -20,4 +20,5 @@ public class User {
     private Bank currentBank; // поточний банк
     private int decimalPlaces; // скільки знаків після коми
     private final String registrationDate; // дата реєстрації
+
 }
