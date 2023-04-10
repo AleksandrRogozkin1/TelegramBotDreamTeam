@@ -42,31 +42,25 @@ public class CurrencyBot extends TelegramLongPollingBot {
                 Обробник нажаття на кнопки (Отримати курс валют, налаштування)
             */
             if (update.hasCallbackQuery()) {
-                // Отримуємо певний ключ нажатої кнопки (у кожної він свій, змінити можна в класі KeyboardCreationService
-                String callData = update.getCallbackQuery().getData();
-                // отримуємо id користувача
+                // Обробник нажаття на кнопки
                 long userId = update.getCallbackQuery().getMessage().getChatId();
+                String callData = update.getCallbackQuery().getData();
                 SendMessage outMessage = new SendMessage();
                 outMessage.setChatId(userId);
 
-                /*
-                    Якщо нажата кнопка з ключом "GET_CURRENCY", то надсилається get-запрос на сайт ПриватБанка
-                    і відпавляється користувачу
-                */
                 if (callData.equals("GET_CURRENCY")) {
+                    // Надсилаємо get-запрос на сайт ПриватБанка і відправляємо відповідь користувачу
                     outMessage.setText(new PrivatSendRequest().getRate(Currency.USD).toString());
                     SendMessage startMenuMessage = new MenuCreationService().getStartMenu(userId);
                     execute(outMessage);
                     execute(startMenuMessage);
                 }
-                /*
-                    Налаштування користувача ще не реалізовані
-                */
+
                 else if (callData.equals("GET_SETTINGS")) {
-                    outMessage.setText("1");
-                    execute(outMessage);
-                    SendMessage startMenuMessage = new MenuCreationService().getStartMenu(userId);
-                    execute(startMenuMessage);
+                    // Відображаємо меню налаштувань
+                    SendMessage settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
+                    execute(settingsMenuMessage);
+                    // ДЛЯ ПОДАЛЬШОЇ РЕАЛІЗАЦІЇ
                 }
             }
         } catch (TelegramApiException e) {
