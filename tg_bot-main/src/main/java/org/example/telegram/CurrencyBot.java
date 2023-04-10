@@ -15,10 +15,8 @@ import java.time.LocalDate;
 
 public class CurrencyBot extends TelegramLongPollingBot {
     // Токен та юзернейм телеграм бота
-    //private static final String BOT_TOKEN = "5609499310:AAGcA0gZX6EeQKy07ALNq_z8_9XvacLJN2Y";
-    private static final String BOT_TOKEN = "5904506234:AAFiUWaZE0NsSJgIiVWEQ7BMZxfe6MTrOKI";
-    //private static final String BOT_USERNAME = "@CurrencyBotByDreamTeamBot";
-    private static final String BOT_USERNAME = "@TestBotJavaGOIT_bot";
+    private static final String BOT_TOKEN = "5609499310:AAGcA0gZX6EeQKy07ALNq_z8_9XvacLJN2Y";
+    private static final String BOT_USERNAME = "@CurrencyBotByDreamTeamBot";
 
     /*
         Обробник дій
