@@ -1,18 +1,27 @@
 package org.example.services;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import org.example.currency.Bank;
 import org.example.currency.Currency;
+import org.example.currency.dto.CurrencyMonoDto;
 import org.example.currency.dto.CurrencyPrivatDto;
 import org.example.currency.dto.CurrencyRateDto;
+import org.example.utils.FileUtils;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
+
+
 public class PrivatSendRequest implements CurrencyService {
-    // url по якому будем відправляти get запрос
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final String URL = "https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5";
 
     @Override
@@ -24,9 +33,23 @@ public class PrivatSendRequest implements CurrencyService {
                     .body()
                     .text();
 
-            Type type = new TypeToken<List<CurrencyPrivatDto>>() {}.getType();
-            return new Gson().fromJson(currencyResponse, type);  // Парсинг Json в об'єкти
-        } catch (IOException e) {
+            Type type = new TypeToken<List<CurrencyPrivatDto>>() {
+            }.getType();
+            List<CurrencyPrivatDto> currencyPrivatDtoList = new Gson().fromJson(currencyResponse, type);
+
+            List<CurrencyRateDto> filteredListOfCurrency = new ArrayList<>();
+
+            currencyPrivatDtoList.stream()
+                    .filter(curr -> Currency.UAH.equals(curr.getBase_ccy()) &&
+                            currency.equals(curr.getCcy()))
+                    .forEach(item -> {
+                        CurrencyRateDto currencyRateDto = new CurrencyRateDto(Bank.PRIVATBANK, currency,
+                                item.getBuy(), item.getSale(), Calendar.getInstance());
+                        filteredListOfCurrency.add(currencyRateDto);
+
+                    });
+            return filteredListOfCurrency;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
