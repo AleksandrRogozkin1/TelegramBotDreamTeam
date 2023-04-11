@@ -1,6 +1,7 @@
 package org.example.telegram;
 
-import org.example.currency.Bank;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.example.currency.Currency;
 import org.example.services.PrivatSendRequest;
 import org.example.telegram.menu.MenuCreationService;
@@ -14,6 +15,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.time.LocalDate;
 
 public class CurrencyBot extends TelegramLongPollingBot {
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     // Токен та юзернейм телеграм бота
     private static final String BOT_TOKEN = "5609499310:AAGcA0gZX6EeQKy07ALNq_z8_9XvacLJN2Y";
     private static final String BOT_USERNAME = "@CurrencyBotByDreamTeamBot";
@@ -30,12 +32,19 @@ public class CurrencyBot extends TelegramLongPollingBot {
             if (update.hasMessage() && update.getMessage().hasText()) {
                 long userId = update.getMessage().getChatId(); // отримуємо tg-id юзера
                 String userFirstName = update.getMessage().getFrom().getFirstName(); // отримуємо юзернейм
+                User user = new User(userId, userFirstName, LocalDate.now().toString()); // створюємо об'єкт юзера
+
+                // Перевірка, якщо ще немає юзера з таким Telegram ID, то додаєм його у список
+                if (FileUtils.getUserSettingsDtoList().stream().noneMatch(item -> item.getUserId() == userId)) {
+                    FileUtils.getUserSettingsDtoList().add(user);
+
+                    // Витягуємо список юзерів з FileUtils та записуєм його у Json
+                    FileUtils.saveInfoToJsonFile(GSON.toJson(FileUtils.getUserSettingsDtoList()),
+                            FileUtils.getUSER_SETTINGS_FILENAME());
+                }
+
                 SendMessage startMenuMessage = new MenuCreationService().getStartMenu(userId); // викликаємо головне меню
                 execute(startMenuMessage);
-
-                User user = new User(userId, userFirstName, Currency.USD, Bank.MONOBANK, 2,
-                        LocalDate.now().toString()); // створюємо об'єкт юзера
-                FileUtils.saveUserToJsonFile(user); // запис його у файл
             }
 
             /*
@@ -54,9 +63,7 @@ public class CurrencyBot extends TelegramLongPollingBot {
                     SendMessage startMenuMessage = new MenuCreationService().getStartMenu(userId);
                     execute(outMessage);
                     execute(startMenuMessage);
-                }
-
-                else if (callData.equals("GET_SETTINGS")) {
+                } else if (callData.equals("GET_SETTINGS")) {
                     // Відображаємо меню налаштувань
                     SendMessage settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
                     execute(settingsMenuMessage);

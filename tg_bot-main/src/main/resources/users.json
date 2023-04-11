@@ -1,0 +1,26 @@
+[
+  {
+    "registrationDate": "2023-04-11",
+    "userId": 1307390733,
+    "username": "Remington",
+    "currentCurrency": "USD",
+    "currentBank": "PRIVATBANK",
+    "decimalPlaces": 2
+  },
+  {
+    "registrationDate": "2023-04-11",
+    "userId": 5701200573,
+    "username": "Дмитро Маркевич",
+    "currentCurrency": "USD",
+    "currentBank": "PRIVATBANK",
+    "decimalPlaces": 2
+  },
+  {
+    "registrationDate": "2023-04-11",
+    "userId": 547197664,
+    "username": "Bohdan",
+    "currentCurrency": "USD",
+    "currentBank": "PRIVATBANK",
+    "decimalPlaces": 2
+  }
+]
