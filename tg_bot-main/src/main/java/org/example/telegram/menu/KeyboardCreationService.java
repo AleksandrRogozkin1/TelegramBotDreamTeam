@@ -34,6 +34,17 @@ public class KeyboardCreationService {
         return markupInline;
     }
 
+    public InlineKeyboardMarkup getBankKeyboard() {
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+        rowsInline.add((createButton("MonoBank", "SET_MONOBANK")));
+        rowsInline.add((createButton("NBU", "SET_NBU")));
+        rowsInline.add((createButton("PrivatBank", "SET_PRIVATBANK")));
+        rowsInline.add((createButton("◀️Back", "GET_BACK")));
+        markupInline.setKeyboard(rowsInline);
+        return markupInline;
+    }
+
     // Метод для створення кнопок
     private List<InlineKeyboardButton> createButton(String command, String callBack) {
         List<InlineKeyboardButton> rowInline = new ArrayList<>();
