@@ -1,0 +1,16 @@
+[
+  {
+    "bank": "MONOBANK",
+    "currency": "EUR",
+    "buy": 39.9,
+    "sell": 41.0004,
+    "rateDate": {
+      "year": 2023,
+      "month": 3,
+      "dayOfMonth": 11,
+      "hourOfDay": 18,
+      "minute": 43,
+      "second": 30
+    }
+  }
+]

@@ -5,7 +5,6 @@ package org.example.currency;
  */
 public enum Bank {
     PRIVATBANK,
-    OSCHADBANK,
     MONOBANK,
     NBU
 }
