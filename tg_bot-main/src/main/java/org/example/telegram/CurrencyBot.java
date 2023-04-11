@@ -60,7 +60,10 @@ public class CurrencyBot extends TelegramLongPollingBot {
                     // Відображаємо меню налаштувань
                     SendMessage settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
                     execute(settingsMenuMessage);
-                    // ДЛЯ ПОДАЛЬШОЇ РЕАЛІЗАЦІЇ
+                    if (callData.equals("GET_BANK_SETTINGS")) {
+                        SendMessage bankMenuMassage = new MenuCreationService().getBankMenu(userId);
+                        execute(bankMenuMassage);
+                    }
                 }
             }
         } catch (TelegramApiException e) {

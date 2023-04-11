@@ -21,4 +21,12 @@ public class MenuCreationService extends BotCommand {
                 .replyMarkup(keyboardCreationService.getSettingsKeyboard())
                 .build();
     }
+
+    public SendMessage getBankMenu(long chatId) {
+        return SendMessage.builder()
+                .chatId(chatId)
+                .text("Chose Bank")
+                .replyMarkup(keyboardCreationService.getBankKeyboard())
+                .build();
+    }
 }
