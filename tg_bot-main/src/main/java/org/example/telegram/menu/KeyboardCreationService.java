@@ -45,6 +45,17 @@ public class KeyboardCreationService {
         return markupInline;
     }
 
+    // Ivan
+    public InlineKeyboardMarkup getCurrencyKeyboard() {
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+        rowsInline.add((createButton("USD", "SET_USD")));
+        rowsInline.add((createButton("EUR", "SET_EUR")));
+        rowsInline.add((createButton("◀️Back", "GET_CURRENCY_BACK")));
+        markupInline.setKeyboard(rowsInline);
+        return markupInline;
+    }
+
     // Метод для створення кнопок
     private List<InlineKeyboardButton> createButton(String command, String callBack) {
         List<InlineKeyboardButton> rowInline = new ArrayList<>();
