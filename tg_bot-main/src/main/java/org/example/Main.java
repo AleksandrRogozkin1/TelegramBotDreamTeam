@@ -20,7 +20,7 @@ public class Main {
                 Тест сервісу MonoSendRequest,
                  метод приймає Currency (в залежності від того, яку валюту ми хочемо отримати)
             */
-            System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new PrivatSendRequest().getRate(Currency.EUR)));
+            // System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new PrivatSendRequest().getRate(Currency.EUR)));
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
