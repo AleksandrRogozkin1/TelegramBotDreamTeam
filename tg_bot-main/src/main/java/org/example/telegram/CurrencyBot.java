@@ -51,28 +51,37 @@ public class CurrencyBot extends TelegramLongPollingBot {
                 Обробник нажаття на кнопки (Отримати курс валют, налаштування)
             */
             if (update.hasCallbackQuery()) {
-                // Обробник нажаття на кнопки
                 long userId = update.getCallbackQuery().getMessage().getChatId();
                 String callData = update.getCallbackQuery().getData();
                 SendMessage outMessage = new SendMessage();
                 outMessage.setChatId(userId);
 
-                if (callData.equals("GET_CURRENCY")) {
-                    // Надсилаємо get-запрос на сайт ПриватБанка і відправляємо відповідь користувачу
-                    outMessage.setText(new PrivatSendRequest().getRate(Currency.USD).toString());
-                    SendMessage startMenuMessage = new MenuCreationService().getStartMenu(userId);
-                    execute(outMessage);
-                    execute(startMenuMessage);
-                } else if (callData.equals("GET_SETTINGS")) {
-                    // Відображаємо меню налаштувань
-                    SendMessage settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
-                    execute(settingsMenuMessage);
-                    if (callData.equals("GET_BANK_SETTINGS")) {
+                switch (callData) {
+                    case "GET_CURRENCY":
+                        outMessage.setText(new PrivatSendRequest().getRate(Currency.USD).toString());
+                        SendMessage startMenuMessage = new MenuCreationService().getStartMenu(userId);
+                        execute(outMessage);
+                        execute(startMenuMessage);
+                        break;
+                    case "GET_SETTINGS":
+                        SendMessage settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
+                        execute(settingsMenuMessage);
+                        break;
+                    case "GET_SETTINGS_BACK":
+                        startMenuMessage = new MenuCreationService().getStartMenu(userId); // викликаємо головне меню
+                        execute(startMenuMessage);
+                        break;
+                    case "GET_BANK_SETTINGS":
                         SendMessage bankMenuMassage = new MenuCreationService().getBankMenu(userId);
                         execute(bankMenuMassage);
-                    }
+                        break;
+                    case "GET_BANK_BACK":
+                        settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
+                        execute(settingsMenuMessage);
+                        break;
                 }
             }
+
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

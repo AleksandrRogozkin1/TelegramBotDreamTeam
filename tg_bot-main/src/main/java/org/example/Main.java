@@ -2,11 +2,8 @@ package org.example;
 
 import com.google.gson.GsonBuilder;
 import org.example.currency.Currency;
-import org.example.currency.dto.CurrencyRateDto;
-import org.example.services.MonoSendRequest;
 import org.example.services.PrivatSendRequest;
 import org.example.telegram.CurrencyBot;
-import org.example.utils.FileUtils;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;

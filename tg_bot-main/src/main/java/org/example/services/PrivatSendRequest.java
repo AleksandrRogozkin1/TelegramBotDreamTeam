@@ -5,20 +5,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.example.currency.Bank;
 import org.example.currency.Currency;
-import org.example.currency.dto.CurrencyMonoDto;
 import org.example.currency.dto.CurrencyPrivatDto;
 import org.example.currency.dto.CurrencyRateDto;
-import org.example.utils.FileUtils;
 import org.jsoup.Jsoup;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
-
-
 
 public class PrivatSendRequest implements CurrencyService {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
