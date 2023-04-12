@@ -4,7 +4,7 @@
     "userId": 1307390733,
     "username": "Remington",
     "currentCurrency": "USD",
-    "currentBank": "PRIVATBANK",
+    "currentBank": "NBU",
     "decimalPlaces": 2
   },
   {
@@ -12,7 +12,7 @@
     "userId": 5701200573,
     "username": "Дмитро Маркевич",
     "currentCurrency": "USD",
-    "currentBank": "PRIVATBANK",
+    "currentBank": "NBU",
     "decimalPlaces": 2
   },
   {
@@ -21,6 +21,14 @@
     "username": "Bohdan",
     "currentCurrency": "USD",
     "currentBank": "PRIVATBANK",
+    "decimalPlaces": 2
+  },
+  {
+    "registrationDate": "2023-04-12",
+    "userId": 679057443,
+    "username": "Ypich",
+    "currentCurrency": "USD",
+    "currentBank": "NBU",
     "decimalPlaces": 2
   }
 ]
