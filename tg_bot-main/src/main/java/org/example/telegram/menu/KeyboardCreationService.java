@@ -29,7 +29,7 @@ public class KeyboardCreationService {
         rowsInline.add(createButton("Bank", "GET_BANK_SETTINGS"));
         rowsInline.add(createButton("Precision", "GET_PRECISION_SETTINGS"));
         rowsInline.add(createButton("Notification time", "GET_NOTIFICATION_SETTINGS"));
-        rowsInline.add(createButton("◀️Back", "GET_BACK"));
+        rowsInline.add(createButton("◀️Back", "GET_SETTINGS_BACK"));
         markupInline.setKeyboard(rowsInline);
         return markupInline;
     }
@@ -40,7 +40,7 @@ public class KeyboardCreationService {
         rowsInline.add((createButton("MonoBank", "SET_MONOBANK")));
         rowsInline.add((createButton("NBU", "SET_NBU")));
         rowsInline.add((createButton("PrivatBank", "SET_PRIVATBANK")));
-        rowsInline.add((createButton("◀️Back", "GET_BACK")));
+        rowsInline.add((createButton("◀️Back", "GET_BANK_BACK")));
         markupInline.setKeyboard(rowsInline);
         return markupInline;
     }
