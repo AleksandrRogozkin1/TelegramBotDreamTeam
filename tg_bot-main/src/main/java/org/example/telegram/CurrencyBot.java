@@ -2,6 +2,7 @@ package org.example.telegram;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.example.currency.Bank;
 import org.example.currency.Currency;
 import org.example.services.PrivatSendRequest;
 import org.example.telegram.menu.MenuCreationService;
@@ -63,10 +64,6 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         execute(outMessage);
                         execute(startMenuMessage);
                         break;
-                    case "GET_SETTINGS":
-                        SendMessage settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
-                        execute(settingsMenuMessage);
-                        break;
                     case "GET_SETTINGS_BACK":
                         startMenuMessage = new MenuCreationService().getStartMenu(userId); // викликаємо головне меню
                         execute(startMenuMessage);
@@ -75,8 +72,18 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         SendMessage bankMenuMassage = new MenuCreationService().getBankMenu(userId);
                         execute(bankMenuMassage);
                         break;
+                    case "SET_MONOBANK":
+                        FileUtils.changeUserCurrentBankData(userId, Bank.MONOBANK);
+                        break;
+                    case "SET_NBU":
+                        FileUtils.changeUserCurrentBankData(userId, Bank.NBU);
+                        break;
+                    case "SET_PRIVATBANK":
+                        FileUtils.changeUserCurrentBankData(userId, Bank.PRIVATBANK);
+                        break;
+                    case "GET_SETTINGS":
                     case "GET_BANK_BACK":
-                        settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
+                        SendMessage settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
                         execute(settingsMenuMessage);
                         break;
                 }

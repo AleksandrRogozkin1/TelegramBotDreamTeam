@@ -1,6 +1,7 @@
 package org.example.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import lombok.Getter;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FileUtils {
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     /*
         CURRENCY_RATES_FILENAME - шлях до файлу, де будуть зберігатись курси валют
         USER_SETTINGS_FILENAME - шлях до файлу, де будуть зберігатись налаштування юзера
@@ -57,6 +59,18 @@ public class FileUtils {
                 .filter(currency -> bank.equals(currency.getBank()))
                 .collect(Collectors.toList());
     }
+
+    public static void changeUserCurrentBankData(long userId, Bank bank) {
+        userSettingsDtoList.stream()
+                .filter(user -> user.getUserId() == userId)
+                .forEach(user -> user.setCurrentBank(bank));
+
+        saveInfoToJsonFile(GSON.toJson(userSettingsDtoList), USER_SETTINGS_FILENAME);
+    }
+
+//    public static Bank getUserBankData() {
+//        userSettingsDtoList.stream()
+//    }
 
     /*
         Метод який повертає список об'єктів з файлу Json (десереалізація)
