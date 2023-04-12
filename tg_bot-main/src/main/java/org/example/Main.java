@@ -22,7 +22,6 @@ public class Main {
                 Тест сервісу MonoSendRequest,
                  метод приймає Currency (в залежності від того, яку валюту ми хочемо отримати)
             */
-            // FileUtils.changeUserCurrentBankData(5701200573l, Bank.NBU);
             // System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(new PrivatSendRequest().getRate(Currency.EUR)));
         } catch (TelegramApiException e) {
             e.printStackTrace();

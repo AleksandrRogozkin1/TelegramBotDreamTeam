@@ -86,6 +86,14 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         SendMessage settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
                         execute(settingsMenuMessage);
                         break;
+                    case "GET_CURRENCY_SETTINGS":
+                        SendMessage currencyMenuMassage = new MenuCreationService().getCurrencyMenu(userId);
+                        execute(currencyMenuMassage);
+                        break;
+                    case "GET_CURRENCY_BACK":
+                        settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
+                        execute(settingsMenuMessage);
+                        break;
                 }
             }
 
