@@ -3,8 +3,8 @@
     "registrationDate": "2023-04-11",
     "userId": 1307390733,
     "username": "Remington",
-    "currentCurrency": "EUR",
-    "currentBank": "NBU",
+    "currentCurrency": "USD",
+    "currentBank": "PRIVATBANK",
     "decimalPlaces": 2
   },
   {
@@ -29,6 +29,14 @@
     "username": "Ypich",
     "currentCurrency": "USD",
     "currentBank": "NBU",
+    "decimalPlaces": 2
+  },
+  {
+    "registrationDate": "2023-04-13",
+    "userId": 168248404,
+    "username": "Олександр",
+    "currentCurrency": "EUR",
+    "currentBank": "PRIVATBANK",
     "decimalPlaces": 2
   }
 ]

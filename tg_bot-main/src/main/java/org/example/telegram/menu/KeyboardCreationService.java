@@ -1,5 +1,9 @@
 package org.example.telegram.menu;
 
+import org.example.currency.Bank;
+import org.example.currency.Currency;
+import org.example.user.User;
+import org.example.utils.FileUtils;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
@@ -34,12 +38,12 @@ public class KeyboardCreationService {
         return markupInline;
     }
 
-    public InlineKeyboardMarkup getBankKeyboard() {
+    public InlineKeyboardMarkup getBankKeyboard(long userId) {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-        rowsInline.add((createButton("MonoBank", "SET_MONOBANK")));
-        rowsInline.add((createButton("NBU", "SET_NBU")));
-        rowsInline.add((createButton("PrivatBank", "SET_PRIVATBANK")));
+        rowsInline.add((createButton(checkMarkForBank(userId,Bank.MONOBANK), "SET_MONOBANK")));
+        rowsInline.add((createButton(checkMarkForBank(userId,Bank.NBU), "SET_NBU")));
+        rowsInline.add((createButton(checkMarkForBank(userId,Bank.PRIVATBANK), "SET_PRIVATBANK")));
         rowsInline.add((createButton("◀️Back", "GET_BANK_BACK")));
         markupInline.setKeyboard(rowsInline);
         return markupInline;
@@ -64,11 +68,11 @@ public class KeyboardCreationService {
     }
 
     // Ivan
-    public InlineKeyboardMarkup getCurrencyKeyboard() {
+    public InlineKeyboardMarkup getCurrencyKeyboard(long userId) {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-        rowsInline.add((createButton("USD", "SET_USD")));
-        rowsInline.add((createButton("EUR", "SET_EUR")));
+        rowsInline.add((createButton(checkMarkForCurrency(userId, Currency.USD), "SET_USD")));
+        rowsInline.add((createButton( checkMarkForCurrency(userId, Currency.EUR), "SET_EUR")));
         rowsInline.add((createButton("◀️Back", "GET_CURRENCY_BACK")));
         markupInline.setKeyboard(rowsInline);
         return markupInline;
@@ -84,4 +88,40 @@ public class KeyboardCreationService {
         rowInline.add(button);
         return rowInline;
     }
+    private String checkMarkForBank(long userId, Bank bankName){
+        Bank userBankSetting = getUserBankSetting(userId);
+        return userBankSetting==bankName ? bankName+"✅" : bankName.name();
+    }
+    private Bank getUserBankSetting(long userId) {
+        return FileUtils.getUserSettingsDtoList().stream()
+                .filter(user -> user.getUserId()==userId)
+                .map(User::getCurrentBank)
+                .findFirst()
+                .orElse(Bank.PRIVATBANK);
+    }
+//    private String checkMarkForTime(long userId,){
+//        Bank userTimeSetting = getUserBankSetting(userId);
+//        return userTimeSetting==bankName ? bankName+"✅" : bankName.name();
+//    }
+//    private Bank getUserTimeSetting(long userId) {
+//        return FileUtils.getUserSettingsDtoList().stream()
+//                .filter(user -> user.getUserId()==userId)
+//                .map(User::getCurrentBank)
+//                .findFirst()
+//                .orElse(Bank.PRIVATBANK);
+//    }
+private String checkMarkForCurrency(long userId, Currency currencyName) {
+    Currency userCurrencySetting = getUserCurrencySetting(userId);
+    return userCurrencySetting==currencyName ? currencyName+"✅" : currencyName.name();
+}
+
+    private Currency getUserCurrencySetting(long userId) {
+        return FileUtils.getUserSettingsDtoList().stream()
+                .filter(userSettings -> userSettings.getUserId() == userId)
+                .map(User::getCurrentCurrency)
+                .findFirst()
+                .orElse(org.example.currency.Currency.USD);
+    }
+
+
 }
