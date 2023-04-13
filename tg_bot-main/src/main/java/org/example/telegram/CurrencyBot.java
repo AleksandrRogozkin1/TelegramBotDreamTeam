@@ -44,7 +44,8 @@ public class CurrencyBot extends TelegramLongPollingBot {
                             FileUtils.getUSER_SETTINGS_FILENAME());
                 }
 
-                SendMessage startMenuMessage = new MenuCreationService().getStartMenu(userId); // викликаємо головне меню
+                // Викликаємо головне меню
+                SendMessage startMenuMessage = new MenuCreationService().getStartMenu(userId);
                 execute(startMenuMessage);
             }
 
@@ -90,13 +91,18 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         SendMessage currencyMenuMassage = new MenuCreationService().getCurrencyMenu(userId);
                         execute(currencyMenuMassage);
                         break;
+                    case "SET_USD":
+                        FileUtils.changeUserCurrentCurrencyData(userId, Currency.USD);
+                        break;
+                    case "SET_EUR":
+                        FileUtils.changeUserCurrentCurrencyData(userId, Currency.EUR);
+                        break;
                     case "GET_CURRENCY_BACK":
                         settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
                         execute(settingsMenuMessage);
                         break;
                 }
             }
-
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

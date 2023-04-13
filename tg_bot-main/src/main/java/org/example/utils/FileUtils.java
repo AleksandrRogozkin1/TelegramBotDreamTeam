@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import lombok.Getter;
 import org.example.currency.Bank;
+import org.example.currency.Currency;
 import org.example.currency.dto.CurrencyRateDto;
 import org.example.user.User;
 
@@ -15,7 +16,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FileUtils {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -50,21 +50,18 @@ public class FileUtils {
         }
     }
 
-    /*
-        Метод для фільтрації Json-ів по банку зі списку.
-        (Поки що не потрібен і не використовується)
-     */
-    public static List<CurrencyRateDto> getFilteredListOfCurrencies(Bank bank) {
-        return currencyRateDtoList.stream()
-                .filter(currency -> bank.equals(currency.getBank()))
-                .collect(Collectors.toList());
-    }
-
     public static void changeUserCurrentBankData(long userId, Bank bank) {
         userSettingsDtoList.stream()
                 .filter(user -> user.getUserId() == userId)
                 .forEach(user -> user.setCurrentBank(bank));
 
+        saveInfoToJsonFile(GSON.toJson(userSettingsDtoList), USER_SETTINGS_FILENAME);
+    }
+
+    public static void changeUserCurrentCurrencyData(long userId, Currency currency) {
+        userSettingsDtoList.stream()
+                .filter(user -> user.getUserId() == userId)
+                .forEach(user -> user.setCurrentCurrency(currency));
         saveInfoToJsonFile(GSON.toJson(userSettingsDtoList), USER_SETTINGS_FILENAME);
     }
 
