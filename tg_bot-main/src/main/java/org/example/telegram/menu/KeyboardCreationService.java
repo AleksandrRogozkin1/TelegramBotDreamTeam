@@ -45,6 +45,24 @@ public class KeyboardCreationService {
         return markupInline;
     }
 
+    public InlineKeyboardMarkup setNotificationTimeKeyboard() {
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+        rowsInline.add((createButton("09:00", "SET_TIME_9")));
+        rowsInline.add((createButton("10:00", "SET_TIME_10")));
+        rowsInline.add((createButton("11:00", "SET_TIME_11")));
+        rowsInline.add((createButton("12:00", "SET_TIME_12")));
+        rowsInline.add((createButton("13:00", "SET_TIME_13")));
+        rowsInline.add((createButton("14:00", "SET_TIME_14")));
+        rowsInline.add((createButton("15:00", "SET_TIME_15")));
+        rowsInline.add((createButton("16:00", "SET_TIME_16")));
+        rowsInline.add((createButton("17:00", "SET_TIME_17")));
+        rowsInline.add((createButton("18:00", "SET_TIME_18")));
+        rowsInline.add((createButton("◀️Back", "GET_NOTIFICATION_BACK")));
+        markupInline.setKeyboard(rowsInline);
+        return markupInline;
+    }
+
     // Ivan
     public InlineKeyboardMarkup getCurrencyKeyboard() {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();

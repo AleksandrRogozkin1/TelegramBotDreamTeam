@@ -37,4 +37,12 @@ public class MenuCreationService extends BotCommand {
                 .replyMarkup(keyboardCreationService.getCurrencyKeyboard())
                 .build();
     }
+
+    public SendMessage setNotificationTimeMenu(long chatId) {
+        return SendMessage.builder()
+                .chatId(chatId)
+                .text("Choose Time for notification")
+                .replyMarkup(keyboardCreationService.setNotificationTimeKeyboard())
+                .build();
+    }
 }
