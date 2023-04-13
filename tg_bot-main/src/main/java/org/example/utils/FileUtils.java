@@ -68,10 +68,6 @@ public class FileUtils {
         saveInfoToJsonFile(GSON.toJson(userSettingsDtoList), USER_SETTINGS_FILENAME);
     }
 
-//    public static Bank getUserBankData() {
-//        userSettingsDtoList.stream()
-//    }
-
     /*
         Метод який повертає список об'єктів з файлу Json (десереалізація)
         Зробив через дженерики, щоб не писати кілька методів
