@@ -8,9 +8,6 @@ import org.example.currency.Currency;
 
 import java.math.BigDecimal;
 
-/*
-    Клас, для парсингу з json відповіді банка в об'єкт
-*/
 @Setter
 @Getter
 @ToString

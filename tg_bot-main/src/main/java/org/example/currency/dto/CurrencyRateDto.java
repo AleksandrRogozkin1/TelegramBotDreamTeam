@@ -8,11 +8,10 @@ import org.example.currency.Bank;
 import org.example.currency.Currency;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-/*
-    Уніфікований формат, до якого будуть зводитись курси валют Привата, Моно та НБУ
-*/
 @Setter
 @Getter
 @ToString
@@ -22,5 +21,10 @@ public class CurrencyRateDto {
     private Currency currency;
     private BigDecimal buy;
     private BigDecimal sell;
-    private Calendar rateDate; // добавив змінну, яка відповідає за дату останнього реквесту
+    private Calendar rateDate;
+
+    public String getFormattedRateDate() {
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yy");
+        return dateFormat.format(rateDate.getTime());
+    }
 }
