@@ -2,6 +2,7 @@ package org.example.telegram;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lombok.SneakyThrows;
 import org.example.currency.Bank;
 import org.example.currency.Currency;
 import org.example.telegram.menu.MenuCreationService;
@@ -9,6 +10,8 @@ import org.example.user.User;
 import org.example.utils.FileUtils;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -39,10 +42,12 @@ public class CurrencyBot extends TelegramLongPollingBot {
             }
 
             if (update.hasCallbackQuery()) {
+
                 long userId = update.getCallbackQuery().getMessage().getChatId();
                 String callData = update.getCallbackQuery().getData();
                 SendMessage outMessage = new SendMessage();
                 outMessage.setChatId(userId);
+
 
                 switch (callData) {
                     case "GET_CURRENCY":
@@ -93,11 +98,14 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         execute(notificationMenuMassage);
                         break;
                 }
+
             }
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
     }
+
+
 
     @Override
     public String getBotUsername() {

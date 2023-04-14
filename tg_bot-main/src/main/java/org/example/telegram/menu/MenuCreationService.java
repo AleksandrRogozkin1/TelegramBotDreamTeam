@@ -26,7 +26,7 @@ public class MenuCreationService extends BotCommand {
         return SendMessage.builder()
                 .chatId(chatId)
                 .text("Choose Bank")
-                .replyMarkup(keyboardCreationService.getBankKeyboard())
+                .replyMarkup(keyboardCreationService.getBankKeyboard(chatId))
                 .build();
     }
 
@@ -34,7 +34,7 @@ public class MenuCreationService extends BotCommand {
         return SendMessage.builder()
                 .chatId(chatId)
                 .text("Choose Currency")
-                .replyMarkup(keyboardCreationService.getCurrencyKeyboard())
+                .replyMarkup(keyboardCreationService.getCurrencyKeyboard(chatId))
                 .build();
     }
 
