@@ -9,6 +9,7 @@ import org.example.user.User;
 import org.example.utils.FileUtils;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -40,6 +41,7 @@ public class CurrencyBot extends TelegramLongPollingBot {
 
             if (update.hasCallbackQuery()) {
                 long userId = update.getCallbackQuery().getMessage().getChatId();
+                long messageId = update.getCallbackQuery().getMessage().getMessageId();
                 String callData = update.getCallbackQuery().getData();
                 SendMessage outMessage = new SendMessage();
                 outMessage.setChatId(userId);
@@ -57,17 +59,23 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         execute(startMenuMessage);
                         break;
                     case "GET_BANK_SETTINGS":
-                        SendMessage bankMenuMassage = new MenuCreationService().getBankMenu(userId);
+                        EditMessageText bankMenuMassage = new MenuCreationService().getBankMenu(userId, messageId);
                         execute(bankMenuMassage);
                         break;
                     case "SET_MONOBANK":
                         FileUtils.changeUserSettingsData(userId, user -> user.setCurrentBank(Bank.MONOBANK));
+                        bankMenuMassage = new MenuCreationService().getBankMenu(userId, messageId);
+                        execute(bankMenuMassage);
                         break;
                     case "SET_NBU":
                         FileUtils.changeUserSettingsData(userId, user -> user.setCurrentBank(Bank.NBU));
+                        bankMenuMassage = new MenuCreationService().getBankMenu(userId, messageId);
+                        execute(bankMenuMassage);
                         break;
                     case "SET_PRIVATBANK":
                         FileUtils.changeUserSettingsData(userId, user -> user.setCurrentBank(Bank.PRIVATBANK));
+                        bankMenuMassage = new MenuCreationService().getBankMenu(userId, messageId);
+                        execute(bankMenuMassage);
                         break;
                     case "GET_SETTINGS":
                     case "GET_BANK_BACK":
@@ -75,7 +83,7 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         execute(settingsMenuMessage);
                         break;
                     case "GET_CURRENCY_SETTINGS":
-                        SendMessage currencyMenuMassage = new MenuCreationService().getCurrencyMenu(userId);
+                        EditMessageText currencyMenuMassage = new MenuCreationService().getCurrencyMenu(userId, messageId);
                         execute(currencyMenuMassage);
                         break;
                     case "SET_USD":
@@ -90,7 +98,7 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         execute(settingsMenuMessage);
                         break;
                     case "GET_NOTIFICATION_SETTINGS":
-                        SendMessage notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId);
+                        EditMessageText notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
                         execute(notificationMenuMassage);
                         break;
                     case "GET_HOME":
@@ -98,7 +106,7 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         execute(settingsMenuMessage);
                         break;
                     case "SWITCH_NOTIFICATION":
-                        notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId);
+                        notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
                         execute(notificationMenuMassage);
                         break;
                 }
