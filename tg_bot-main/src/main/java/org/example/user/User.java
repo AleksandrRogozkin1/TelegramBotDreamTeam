@@ -29,5 +29,4 @@ public class User {
         decimalPlaces = 2;
         notificationTime = "OFF";
     }
-
 }

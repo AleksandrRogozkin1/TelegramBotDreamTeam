@@ -39,7 +39,7 @@ public class MenuCreationService extends BotCommand {
                 .chatId(chatId)
                 .messageId(toIntExact(messageId))
                 .text("Decimal places")
-                .replyMarkup(keyboardCreationService.getDecimalPlacesKeyboard(chatId))
+                .replyMarkup(keyboardCreationService.getDecimalPlacesKeyboard())
                 .build();
     }
 
