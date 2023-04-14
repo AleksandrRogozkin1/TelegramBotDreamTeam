@@ -52,6 +52,19 @@ public class KeyboardCreationService {
         rowsInline.add((createButton("USD", "SET_USD")));
         rowsInline.add((createButton("EUR", "SET_EUR")));
         rowsInline.add((createButton("◀️Back", "GET_CURRENCY_BACK")));
+        rowsInline.add(createButton("Home", "GET_HOME"));
+        markupInline.setKeyboard(rowsInline);
+        return markupInline;
+    }
+
+    public InlineKeyboardMarkup getDecimalPlacesKeyboard() {
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+        rowsInline.add(createButton("2", "SET_2_DECIMAL"));
+        rowsInline.add(createButton("3", "SET_3_DECIMAL"));
+        rowsInline.add(createButton("4", "SET_4_DECIMAL"));
+        rowsInline.add(createButton("◀️Back", "GET_CURRENCY_BACK"));
+        rowsInline.add(createButton("Home", "GET_HOME"));
         markupInline.setKeyboard(rowsInline);
         return markupInline;
     }
@@ -66,4 +79,54 @@ public class KeyboardCreationService {
         rowInline.add(button);
         return rowInline;
     }
+}
+
+    private String checkMarkForBank(long userId, Bank bankName) {
+        Bank userBankSetting = getUserBankSetting(userId);
+        return userBankSetting == bankName ? bankName + "✅" : bankName.name();
+    }
+
+    private String checkMarkForCurrency(long userId, Currency currencyName) {
+        Currency userCurrencySetting = getUserCurrencySetting(userId);
+        return userCurrencySetting == currencyName ? currencyName + "✅" : currencyName.name();
+    }
+
+    /*
+    private String checkMarkForTime(long userId,) {
+        Bank userTimeSetting = getUserBankSetting(userId);
+        return userTimeSetting == bankName ? bankName + "✅" : bankName.name();
+    }
+
+    private Bank getUserTimeSetting(long userId) {
+        return FileUtils.getUserSettingsDtoList().stream()
+                .filter(user -> user.getUserId() == userId)
+                .map(User::getCurrentBank)
+                .findFirst()
+                .orElse(Bank.PRIVATBANK);
+    }
+    */
+
+    private Bank getUserBankSetting(long userId) {
+        return FileUtils.getUserSettingsDtoList().stream()
+                .filter(user -> user.getUserId() == userId)
+                .map(User::getCurrentBank)
+                .findFirst()
+                .orElse(Bank.PRIVATBANK);
+    }
+
+    private Currency getUserCurrencySetting(long userId) {
+        return FileUtils.getUserSettingsDtoList().stream()
+                .filter(userSettings -> userSettings.getUserId() == userId)
+                .map(User::getCurrentCurrency)
+                .findFirst()
+                .orElse(org.example.currency.Currency.USD);
+    }
+
+//    private String getUserNotificationSetting(long userId) {
+//        return FileUtils.getUserSettingsDtoList().stream()
+//                .filter(userSettings -> userSettings.getUserId() == userId)
+//                .map(User::getNotificationTime)
+//                .map(time -> time.equals("OFF") ? time + "" : time +"✅" )
+//                .collect(Collectors.joining());
+//    }
 }

@@ -33,6 +33,16 @@ public class MenuCreationService extends BotCommand {
     public SendMessage getCurrencyMenu(long chatId) {
         return SendMessage.builder()
                 .chatId(chatId)
+                .messageId(toIntExact(messageId))
+                .text("Decimal places")
+                .replyMarkup(keyboardCreationService.getDecimalPlacesKeyboard())
+                .build();
+    }
+
+    public EditMessageText getCurrencyMenu(long chatId, long messageId) {
+        return EditMessageText.builder()
+                .chatId(chatId)
+                .messageId(toIntExact(messageId))
                 .text("Choose Currency")
                 .replyMarkup(keyboardCreationService.getCurrencyKeyboard())
                 .build();
