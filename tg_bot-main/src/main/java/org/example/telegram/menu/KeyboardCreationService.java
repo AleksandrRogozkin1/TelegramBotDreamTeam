@@ -74,24 +74,24 @@ public class KeyboardCreationService {
         return markupInline;
     }
 
+    public InlineKeyboardMarkup setDecimalPlacesKeyboard() {
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+        rowsInline.add(createButton("2", "SET_PRECISION_2"));
+        rowsInline.add(createButton("3", "SET_PRECISION_3"));
+        rowsInline.add(createButton("4", "SET_PRECISION_4"));
+        rowsInline.add(createButton("◀️Back", "GET_SETTINGS"));
+        rowsInline.add(createButton("Home", "GET_HOME"));
+        markupInline.setKeyboard(rowsInline);
+        return markupInline;
+    }
+
     public InlineKeyboardMarkup getCurrencyKeyboard(long userId) {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
         rowsInline.add((createButton(checkMarkForCurrency(userId, Currency.USD), "SET_USD")));
         rowsInline.add((createButton(checkMarkForCurrency(userId, Currency.EUR), "SET_EUR")));
         rowsInline.add((createButton("◀️Back", "GET_CURRENCY_BACK")));
-        rowsInline.add(createButton("Home", "GET_HOME"));
-        markupInline.setKeyboard(rowsInline);
-        return markupInline;
-    }
-
-    public InlineKeyboardMarkup getDecimalPlacesKeyboard() {
-        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-        rowsInline.add(createButton("2", "SET_2_DECIMAL"));
-        rowsInline.add(createButton("3", "SET_3_DECIMAL"));
-        rowsInline.add(createButton("4", "SET_4_DECIMAL"));
-        rowsInline.add(createButton("◀️Back", "GET_CURRENCY_BACK"));
         rowsInline.add(createButton("Home", "GET_HOME"));
         markupInline.setKeyboard(rowsInline);
         return markupInline;
@@ -116,7 +116,7 @@ public class KeyboardCreationService {
         Currency userCurrencySetting = getUserCurrencySetting(userId);
         return userCurrencySetting == currencyName ? currencyName + "✅" : currencyName.name();
     }
-    
+
     private Bank getUserBankSetting(long userId) {
         return FileUtils.getUserSettingsDtoList().stream()
                 .filter(user -> user.getUserId() == userId)
@@ -132,12 +132,4 @@ public class KeyboardCreationService {
                 .findFirst()
                 .orElse(org.example.currency.Currency.USD);
     }
-
-//    private String getUserNotificationSetting(long userId) {
-//        return FileUtils.getUserSettingsDtoList().stream()
-//                .filter(userSettings -> userSettings.getUserId() == userId)
-//                .map(User::getNotificationTime)
-//                .map(time -> time.equals("OFF") ? time + "" : time +"✅" )
-//                .collect(Collectors.joining());
-//    }
 }
