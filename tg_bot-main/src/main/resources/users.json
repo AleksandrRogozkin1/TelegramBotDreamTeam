@@ -35,9 +35,9 @@
     "registrationDate": "2023-04-14",
     "userId": 1307390733,
     "username": "Remington",
+    "notificationTime": "OFF",
     "currentCurrency": "EUR",
     "currentBank": "NBU",
-    "decimalPlaces": 2,
-    "notificationTime": "OFF"
+    "decimalPlaces": 2
   }
 ]
