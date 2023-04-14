@@ -68,6 +68,7 @@ public class KeyboardCreationService {
         rowInline3.add(InlineKeyboardButton.builder().text("16:00").callbackData("SET_NOTIFICATION_TIME_16").build());
         rowInline3.add(InlineKeyboardButton.builder().text("17:00").callbackData("SET_NOTIFICATION_TIME_17").build());
         rowInline4.add(InlineKeyboardButton.builder().text("18:00").callbackData("SET_NOTIFICATION_TIME_18").build());
+        rowInline4.add(InlineKeyboardButton.builder().text("Switch Notification").callbackData("SWITCH_NOTIFICATION").build());
         rowInline4.add(InlineKeyboardButton.builder().text("◀️Back").callbackData("GET_NOTIFICATION_BACK").build());
         rowInline5.add(InlineKeyboardButton.builder().text("Home").callbackData("GET_HOME").build());
         rowsInline.add(rowInline1);
