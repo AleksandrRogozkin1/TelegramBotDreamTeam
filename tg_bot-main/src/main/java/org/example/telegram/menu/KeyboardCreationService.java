@@ -13,13 +13,7 @@ import java.util.List;
 public class KeyboardCreationService {
     public InlineKeyboardMarkup getMainKeyboard() {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-        // Створення списку з кнопками
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-
-        /*
-            До кожної з кнопок привязаний ключ (Для Get actual currency: - GET_CURRENCY).
-            Реалізовано для обробки нажаття кнопки (в CurrencyBot)
-        */
         rowsInline.add(createButton("Get actual currency", "GET_CURRENCY"));
         rowsInline.add(createButton("User settings", "GET_SETTINGS"));
         markupInline.setKeyboard(rowsInline);
@@ -41,11 +35,13 @@ public class KeyboardCreationService {
     public InlineKeyboardMarkup getBankKeyboard(long userId) {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-        rowsInline.add(createButton(checkMarkForBank(userId,Bank.MONOBANK), "SET_MONOBANK"));
-        rowsInline.add(createButton(checkMarkForBank(userId,Bank.NBU), "SET_NBU"));
-        rowsInline.add(createButton(checkMarkForBank(userId,Bank.PRIVATBANK), "SET_PRIVATBANK"));
+
+        rowsInline.add(createButton(checkMarkForBank(userId, Bank.MONOBANK), "SET_MONOBANK"));
+        rowsInline.add(createButton(checkMarkForBank(userId, Bank.NBU), "SET_NBU"));
+        rowsInline.add(createButton(checkMarkForBank(userId, Bank.PRIVATBANK), "SET_PRIVATBANK"));
         rowsInline.add(createButton("◀️Back", "GET_BANK_BACK"));
         rowsInline.add(createButton("Home", "GET_HOME"));
+
         markupInline.setKeyboard(rowsInline);
         return markupInline;
     }
@@ -80,19 +76,17 @@ public class KeyboardCreationService {
         return markupInline;
     }
 
-    // Ivan
     public InlineKeyboardMarkup getCurrencyKeyboard(long userId) {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
         rowsInline.add((createButton(checkMarkForCurrency(userId, Currency.USD), "SET_USD")));
-        rowsInline.add((createButton( checkMarkForCurrency(userId, Currency.EUR), "SET_EUR")));
+        rowsInline.add((createButton(checkMarkForCurrency(userId, Currency.EUR), "SET_EUR")));
         rowsInline.add((createButton("◀️Back", "GET_CURRENCY_BACK")));
         rowsInline.add(createButton("Home", "GET_HOME"));
         markupInline.setKeyboard(rowsInline);
         return markupInline;
     }
 
-    // Метод для створення кнопок
     private List<InlineKeyboardButton> createButton(String command, String callBack) {
         List<InlineKeyboardButton> rowInline = new ArrayList<>();
         InlineKeyboardButton button = InlineKeyboardButton.builder()
@@ -102,32 +96,39 @@ public class KeyboardCreationService {
         rowInline.add(button);
         return rowInline;
     }
-    private String checkMarkForBank(long userId, Bank bankName){
+
+    private String checkMarkForBank(long userId, Bank bankName) {
         Bank userBankSetting = getUserBankSetting(userId);
-        return userBankSetting==bankName ? bankName+"✅" : bankName.name();
+        return userBankSetting == bankName ? bankName + "✅" : bankName.name();
     }
+
     private Bank getUserBankSetting(long userId) {
         return FileUtils.getUserSettingsDtoList().stream()
-                .filter(user -> user.getUserId()==userId)
+                .filter(user -> user.getUserId() == userId)
                 .map(User::getCurrentBank)
                 .findFirst()
                 .orElse(Bank.PRIVATBANK);
     }
-//    private String checkMarkForTime(long userId,){
-//        Bank userTimeSetting = getUserBankSetting(userId);
-//        return userTimeSetting==bankName ? bankName+"✅" : bankName.name();
-//    }
-//    private Bank getUserTimeSetting(long userId) {
-//        return FileUtils.getUserSettingsDtoList().stream()
-//                .filter(user -> user.getUserId()==userId)
-//                .map(User::getCurrentBank)
-//                .findFirst()
-//                .orElse(Bank.PRIVATBANK);
-//    }
-private String checkMarkForCurrency(long userId, Currency currencyName) {
-    Currency userCurrencySetting = getUserCurrencySetting(userId);
-    return userCurrencySetting==currencyName ? currencyName+"✅" : currencyName.name();
-}
+
+    /*
+    private String checkMarkForTime(long userId,) {
+        Bank userTimeSetting = getUserBankSetting(userId);
+        return userTimeSetting == bankName ? bankName + "✅" : bankName.name();
+    }
+
+    private Bank getUserTimeSetting(long userId) {
+        return FileUtils.getUserSettingsDtoList().stream()
+                .filter(user -> user.getUserId() == userId)
+                .map(User::getCurrentBank)
+                .findFirst()
+                .orElse(Bank.PRIVATBANK);
+    }
+    */
+
+    private String checkMarkForCurrency(long userId, Currency currencyName) {
+        Currency userCurrencySetting = getUserCurrencySetting(userId);
+        return userCurrencySetting == currencyName ? currencyName + "✅" : currencyName.name();
+    }
 
     private Currency getUserCurrencySetting(long userId) {
         return FileUtils.getUserSettingsDtoList().stream()
@@ -136,6 +137,4 @@ private String checkMarkForCurrency(long userId, Currency currencyName) {
                 .findFirst()
                 .orElse(org.example.currency.Currency.USD);
     }
-
-
 }

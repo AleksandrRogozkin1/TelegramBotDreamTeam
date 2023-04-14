@@ -30,5 +30,13 @@
     "currentCurrency": "EUR",
     "currentBank": "PRIVATBANK",
     "decimalPlaces": 2
+  },
+  {
+    "registrationDate": "2023-04-14",
+    "userId": 1307390733,
+    "username": "Remington",
+    "currentCurrency": "USD",
+    "currentBank": "MONOBANK",
+    "decimalPlaces": 2
   }
 ]

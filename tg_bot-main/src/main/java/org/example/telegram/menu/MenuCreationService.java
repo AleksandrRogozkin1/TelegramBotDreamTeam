@@ -1,7 +1,10 @@
 package org.example.telegram.menu;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
+
+import static java.lang.Math.toIntExact;
 
 public class MenuCreationService extends BotCommand {
     private static final KeyboardCreationService keyboardCreationService = new KeyboardCreationService();
@@ -22,25 +25,28 @@ public class MenuCreationService extends BotCommand {
                 .build();
     }
 
-    public SendMessage getBankMenu(long chatId) {
-        return SendMessage.builder()
+    public EditMessageText getBankMenu(long chatId, long messageId) {
+        return EditMessageText.builder()
                 .chatId(chatId)
+                .messageId(toIntExact(messageId))
                 .text("Choose Bank")
                 .replyMarkup(keyboardCreationService.getBankKeyboard(chatId))
                 .build();
     }
 
-    public SendMessage getCurrencyMenu(long chatId) {
-        return SendMessage.builder()
+    public EditMessageText getCurrencyMenu(long chatId, long messageId) {
+        return EditMessageText.builder()
                 .chatId(chatId)
+                .messageId(toIntExact(messageId))
                 .text("Choose Currency")
                 .replyMarkup(keyboardCreationService.getCurrencyKeyboard(chatId))
                 .build();
     }
 
-    public SendMessage setNotificationTimeMenu(long chatId) {
-        return SendMessage.builder()
+    public EditMessageText setNotificationTimeMenu(long chatId, long messageId) {
+        return EditMessageText.builder()
                 .chatId(chatId)
+                .messageId(toIntExact(messageId))
                 .text("Choose Time for notification")
                 .replyMarkup(keyboardCreationService.setNotificationTimeKeyboard())
                 .build();
