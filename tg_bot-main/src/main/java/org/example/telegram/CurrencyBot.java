@@ -88,12 +88,12 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         break;
                     case "SET_USD":
                         FileUtils.changeUserSettingsData(userId, user -> user.setCurrentCurrency(Currency.USD));
-                        currencyMenuMassage=new MenuCreationService().getCurrencyMenu(userId,messageId);
+                        currencyMenuMassage = new MenuCreationService().getCurrencyMenu(userId, messageId);
                         execute(currencyMenuMassage);
                         break;
                     case "SET_EUR":
                         FileUtils.changeUserSettingsData(userId, user -> user.setCurrentCurrency(Currency.EUR));
-                        currencyMenuMassage=new MenuCreationService().getCurrencyMenu(userId,messageId);
+                        currencyMenuMassage = new MenuCreationService().getCurrencyMenu(userId, messageId);
                         execute(currencyMenuMassage);
                         break;
                     case "GET_CURRENCY_BACK":
@@ -116,6 +116,15 @@ public class CurrencyBot extends TelegramLongPollingBot {
                     case "GET_PRECISION_SETTINGS":
                         EditMessageText precisionMenuMessage = new MenuCreationService().setDecimalPlacesMenu(userId, messageId);
                         execute(precisionMenuMessage);
+                        break;
+                    case "SET_PRECISION_2":
+                        FileUtils.changeUserSettingsData(userId, user -> user.setDecimalPlaces(2));
+                        break;
+                    case "SET_PRECISION_3":
+                        FileUtils.changeUserSettingsData(userId, user -> user.setDecimalPlaces(3));
+                        break;
+                    case "SET_PRECISION_4":
+                        FileUtils.changeUserSettingsData(userId, user -> user.setDecimalPlaces(4));
                         break;
                 }
             }
