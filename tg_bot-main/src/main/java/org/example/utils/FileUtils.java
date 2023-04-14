@@ -8,6 +8,9 @@ import lombok.Getter;
 import org.example.currency.Bank;
 import org.example.currency.Currency;
 import org.example.currency.dto.CurrencyRateDto;
+import org.example.services.MonoSendRequest;
+import org.example.services.NbuSendRequest;
+import org.example.services.PrivatSendRequest;
 import org.example.user.User;
 
 import java.io.FileOutputStream;
@@ -16,27 +19,20 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class FileUtils {
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    /*
-        CURRENCY_RATES_FILENAME - шлях до файлу, де будуть зберігатись курси валют
-        USER_SETTINGS_FILENAME - шлях до файлу, де будуть зберігатись налаштування юзера
-     */
     @Getter
     private static final String CURRENCY_RATES_FILENAME = "tg_bot-main/src/main/resources/currencyRates.json";
     @Getter
     private static final String USER_SETTINGS_FILENAME = "tg_bot-main/src/main/resources/users.json";
-
-    /*
-        Списки з об'єктами (налаштування юзера та курси валют відповідно).
-     */
     @Getter
     private static final List<User> userSettingsDtoList =
             getListObjectFromJson(USER_SETTINGS_FILENAME, User.class);
     @Getter
     private static final List<CurrencyRateDto> currencyRateDtoList =
             getListObjectFromJson(CURRENCY_RATES_FILENAME, CurrencyRateDto.class);
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     /*
     Метод, який створює Json файл та записує туди певні абстрактні дані (курс валют або юзерів)
@@ -50,25 +46,18 @@ public class FileUtils {
         }
     }
 
-    public static void changeUserCurrentBankData(long userId, Bank bank) {
-        userSettingsDtoList.stream()
-                .filter(user -> user.getUserId() == userId)
-                .forEach(user -> user.setCurrentBank(bank));
-
-        saveInfoToJsonFile(GSON.toJson(userSettingsDtoList), USER_SETTINGS_FILENAME);
-    }
-
-    public static void changeUserCurrentCurrencyData(long userId, Currency currency) {
-        userSettingsDtoList.stream()
-                .filter(user -> user.getUserId() == userId)
-                .forEach(user -> user.setCurrentCurrency(currency));
-        saveInfoToJsonFile(GSON.toJson(userSettingsDtoList), USER_SETTINGS_FILENAME);
-    }
-
     /*
-        Метод який повертає список об'єктів з файлу Json (десереалізація)
-        Зробив через дженерики, щоб не писати кілька методів
-     */
+    Метод, який міняє якісь дані користувача(поточний банк, валюту).
+    Другим аргументом може передаватись, наприклад, user -> user.setCurrentCurrency(Currency.USD); (зміна банку)
+            або user -> user.setCurrentBank(Bank.NBU);
+    */
+    public static void changeUserSettingsData(long userId, Consumer<User> settingsUpdater) {
+        userSettingsDtoList.stream()
+                .filter(user -> user.getUserId() == userId)
+                .forEach(settingsUpdater);
+        saveInfoToJsonFile(GSON.toJson(userSettingsDtoList), USER_SETTINGS_FILENAME);
+    }
+
     private static <T> List<T> getListObjectFromJson(String fileName, Class<T> typeListElementClass) {
         List<T> listOfObjects = new ArrayList<>();
         try (JsonReader reader = new JsonReader(new FileReader(fileName))) {
@@ -79,5 +68,57 @@ public class FileUtils {
         }
         if (listOfObjects == null) listOfObjects = new ArrayList<>();
         return listOfObjects;
+    }
+
+    public static String getRateByUserSettings(long userId) {
+        User user = getUserById(userId);
+
+        Bank bank = user.getCurrentBank();
+        Currency currency = user.getCurrentCurrency();
+
+        CurrencyRateDto currencyRate = getCurrencyRateByBankAndCurrency(bank, currency);
+
+        if (currencyRate == null || isCurrencyRateOutdated(currencyRate)) {
+            updateCurrencyRates();
+            currencyRate = getCurrencyRateByBankAndCurrency(bank, currency);
+        }
+        return buildCurrencyRateString(currencyRate);
+    }
+
+    private static User getUserById(long userId) {
+        return userSettingsDtoList.stream()
+                .filter(settings -> settings.getUserId() == userId)
+                .findFirst()
+                .orElse(null);
+    }
+
+    private static CurrencyRateDto getCurrencyRateByBankAndCurrency(Bank bank, Currency currency) {
+        return currencyRateDtoList.stream()
+                .filter(currencyRateDto -> currencyRateDto.getBank().equals(bank) &&
+                        currencyRateDto.getCurrency().equals(currency))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private static boolean isCurrencyRateOutdated(CurrencyRateDto currencyRate) {
+        return System.currentTimeMillis() - currencyRate.getRateDate().getTimeInMillis() > 300000;
+    }
+
+    private static void updateCurrencyRates() {
+        currencyRateDtoList.clear();
+        currencyRateDtoList.addAll(new PrivatSendRequest().getRate());
+        currencyRateDtoList.addAll(new NbuSendRequest().getRate());
+        currencyRateDtoList.addAll(new MonoSendRequest().getRate());
+        FileUtils.saveInfoToJsonFile(GSON.toJson(currencyRateDtoList), CURRENCY_RATES_FILENAME);
+    }
+
+    private static String buildCurrencyRateString(CurrencyRateDto currencyRate) {
+        return "Currency from " + currencyRate.getBank() + "\n" +
+                "-----------------------------------------\n" +
+                currencyRate.getCurrency() + "/UAH:\n" +
+                "Buy: " + currencyRate.getBuy() + "\n" +
+                "Sell: " + currencyRate.getSell() + "\n" +
+                "-----------------------------------------\n" +
+                "Last upd in: " + currencyRate.getFormattedRateDate();
     }
 }

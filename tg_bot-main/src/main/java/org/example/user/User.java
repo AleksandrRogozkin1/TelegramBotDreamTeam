@@ -5,22 +5,20 @@ import lombok.Setter;
 import org.example.currency.Bank;
 import org.example.currency.Currency;
 
+import javax.management.Notification;
+
 @Getter
 @Setter
-/*
-    Клас для збереження даних (налаштувань) користувача
-*/
 public class User {
-    private final String registrationDate; // дата реєстрації
-    private long userId; // телеграм ід користувача
-    private String username; // ім'я
-    private Currency currentCurrency; // поточна валюта
-    private Bank currentBank; // поточний банк
-    private int decimalPlaces; // скільки знаків після коми
+    private final String registrationDate;
+    private long userId;
+    private String username;
+    private Currency currentCurrency;
+    private Bank currentBank;
+    private int decimalPlaces;
+    private String notificationTime;
 
-    /*
-        Конструктор (для того, щоб при реєстрації нового юзера, він мав вже якісь базові налаштування)
-     */
+
     public User(long userId, String username, String registrationDate) {
         this.userId = userId;
         this.username = username;
@@ -29,5 +27,7 @@ public class User {
         currentCurrency = Currency.USD;
         currentBank = Bank.PRIVATBANK;
         decimalPlaces = 2;
+        notificationTime = "OFF";
     }
+
 }
