@@ -116,22 +116,7 @@ public class KeyboardCreationService {
         Currency userCurrencySetting = getUserCurrencySetting(userId);
         return userCurrencySetting == currencyName ? currencyName + "✅" : currencyName.name();
     }
-
-    /*
-    private String checkMarkForTime(long userId,) {
-        Bank userTimeSetting = getUserBankSetting(userId);
-        return userTimeSetting == bankName ? bankName + "✅" : bankName.name();
-    }
-
-    private Bank getUserTimeSetting(long userId) {
-        return FileUtils.getUserSettingsDtoList().stream()
-                .filter(user -> user.getUserId() == userId)
-                .map(User::getCurrentBank)
-                .findFirst()
-                .orElse(Bank.PRIVATBANK);
-    }
-    */
-
+    
     private Bank getUserBankSetting(long userId) {
         return FileUtils.getUserSettingsDtoList().stream()
                 .filter(user -> user.getUserId() == userId)
