@@ -58,6 +58,7 @@ public class CurrencyBot extends TelegramLongPollingBot {
                 SendMessage outMessage = new SendMessage();
                 outMessage.setChatId(userId);
 
+
                 switch (callData) {
                     case "GET_CURRENCY":
                         outMessage.setText(new PrivatSendRequest().getRate(Currency.USD).toString());
@@ -101,6 +102,18 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
                         execute(settingsMenuMessage);
                         break;
+                    case "GET_NOTIFICATION_SETTINGS":
+                        SendMessage notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId);
+                        execute(notificationMenuMassage);
+                        break;
+                    case "GET_HOME":
+                        settingsMenuMessage = new MenuCreationService().getStartMenu(userId);
+                        execute(settingsMenuMessage);
+                        break;
+                    case "SWITCH_NOTIFICATION":
+                        notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId);
+                        execute(notificationMenuMassage);
+                        break;
                 }
             }
         } catch (TelegramApiException e) {
@@ -118,5 +131,3 @@ public class CurrencyBot extends TelegramLongPollingBot {
         return BOT_TOKEN;
     }
 }
-
-
