@@ -82,7 +82,7 @@ public class FileUtils {
             updateCurrencyRates();
             currencyRate = getCurrencyRateByBankAndCurrency(bank, currency);
         }
-        return buildCurrencyRateString(currencyRate);
+        return buildCurrencyRateString(user, currencyRate);
     }
 
     private static User getUserById(long userId) {
@@ -112,12 +112,16 @@ public class FileUtils {
         FileUtils.saveInfoToJsonFile(GSON.toJson(currencyRateDtoList), CURRENCY_RATES_FILENAME);
     }
 
-    private static String buildCurrencyRateString(CurrencyRateDto currencyRate) {
+    private static String buildCurrencyRateString(User user, CurrencyRateDto currencyRate) {
+        int decimalPlaces = user.getDecimalPlaces();
+        String buyFormat = "%." + decimalPlaces + "f";
+        String sellFormat = "%." + decimalPlaces + "f";
+
         return "Currency from " + currencyRate.getBank() + "\n" +
                 "-----------------------------------------\n" +
                 currencyRate.getCurrency() + "/UAH:\n" +
-                "Buy: " + currencyRate.getBuy() + "\n" +
-                "Sell: " + currencyRate.getSell() + "\n" +
+                "Buy: " + String.format(buyFormat, currencyRate.getBuy()) + "\n" +
+                "Sell: " + String.format(sellFormat, currencyRate.getSell()) + "\n" +
                 "-----------------------------------------\n" +
                 "Last upd in: " + currencyRate.getFormattedRateDate();
     }
