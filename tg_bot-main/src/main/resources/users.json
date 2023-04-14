@@ -20,7 +20,7 @@
     "userId": 679057443,
     "username": "Ypich",
     "currentCurrency": "USD",
-    "currentBank": "NBU",
+    "currentBank": "MONOBANK",
     "decimalPlaces": 2
   },
   {
@@ -28,15 +28,16 @@
     "userId": 168248404,
     "username": "Îëåêñàíäð",
     "currentCurrency": "EUR",
-    "currentBank": "NBU",
+    "currentBank": "MONOBANK",
     "decimalPlaces": 2
   },
   {
     "registrationDate": "2023-04-14",
     "userId": 1307390733,
     "username": "Remington",
+    "notificationTime": "OFF",
     "currentCurrency": "EUR",
-    "currentBank": "MONOBANK",
+    "currentBank": "NBU",
     "decimalPlaces": 2
   }
 ]
