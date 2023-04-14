@@ -2,29 +2,29 @@
   {
     "bank": "PRIVATBANK",
     "currency": "EUR",
-    "buy": 40.35000,
-    "sell": 41.35000,
+    "buy": 40.50000,
+    "sell": 41.50000,
     "rateDate": {
       "year": 2023,
       "month": 3,
       "dayOfMonth": 14,
-      "hourOfDay": 15,
-      "minute": 50,
-      "second": 3
+      "hourOfDay": 16,
+      "minute": 37,
+      "second": 54
     }
   },
   {
     "bank": "PRIVATBANK",
     "currency": "USD",
-    "buy": 37.20000,
-    "sell": 37.70000,
+    "buy": 37.25000,
+    "sell": 37.75000,
     "rateDate": {
       "year": 2023,
       "month": 3,
       "dayOfMonth": 14,
-      "hourOfDay": 15,
-      "minute": 50,
-      "second": 3
+      "hourOfDay": 16,
+      "minute": 37,
+      "second": 54
     }
   },
   {
@@ -36,9 +36,9 @@
       "year": 2023,
       "month": 3,
       "dayOfMonth": 14,
-      "hourOfDay": 15,
-      "minute": 50,
-      "second": 3
+      "hourOfDay": 16,
+      "minute": 37,
+      "second": 54
     }
   },
   {
@@ -50,9 +50,9 @@
       "year": 2023,
       "month": 3,
       "dayOfMonth": 14,
-      "hourOfDay": 15,
-      "minute": 50,
-      "second": 3
+      "hourOfDay": 16,
+      "minute": 37,
+      "second": 54
     }
   },
   {
@@ -64,23 +64,23 @@
       "year": 2023,
       "month": 3,
       "dayOfMonth": 14,
-      "hourOfDay": 15,
-      "minute": 50,
-      "second": 4
+      "hourOfDay": 16,
+      "minute": 37,
+      "second": 55
     }
   },
   {
     "bank": "MONOBANK",
     "currency": "EUR",
-    "buy": 40.55,
-    "sell": 41.6997,
+    "buy": 40.45,
+    "sell": 41.6008,
     "rateDate": {
       "year": 2023,
       "month": 3,
       "dayOfMonth": 14,
-      "hourOfDay": 15,
-      "minute": 50,
-      "second": 4
+      "hourOfDay": 16,
+      "minute": 37,
+      "second": 55
     }
   }
 ]
