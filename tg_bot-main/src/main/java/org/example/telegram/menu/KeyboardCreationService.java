@@ -9,7 +9,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class KeyboardCreationService {
     public InlineKeyboardMarkup getMainKeyboard() {
@@ -77,6 +76,18 @@ public class KeyboardCreationService {
         return markupInline;
     }
 
+    public InlineKeyboardMarkup setDecimalPlacesKeyboard() {
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+        rowsInline.add(createButton("2", "SET_PRECISION_2"));
+        rowsInline.add(createButton("3", "SET_PRECISION_3"));
+        rowsInline.add(createButton("4", "SET_PRECISION_4"));
+        rowsInline.add(createButton("◀️Back", "GET_SETTINGS"));
+        rowsInline.add(createButton("Home", "GET_HOME"));
+        markupInline.setKeyboard(rowsInline);
+        return markupInline;
+    }
+
     public InlineKeyboardMarkup getCurrencyKeyboard(long userId) {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
@@ -110,6 +121,7 @@ public class KeyboardCreationService {
                 .findFirst()
                 .orElse(Bank.PRIVATBANK);
     }
+
     private String checkMarkForCurrency(long userId, Currency currencyName) {
         Currency userCurrencySetting = getUserCurrencySetting(userId);
         return userCurrencySetting == currencyName ? currencyName + "✅" : currencyName.name();
@@ -129,7 +141,4 @@ public class KeyboardCreationService {
 //                .map(time -> time.equals("OFF") ? time + "" : time +"✅" )
 //                .collect(Collectors.joining());
 //    }
-
-
-
 }

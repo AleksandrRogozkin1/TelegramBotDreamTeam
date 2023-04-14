@@ -43,6 +43,15 @@ public class MenuCreationService extends BotCommand {
                 .build();
     }
 
+    public EditMessageText getDecimalPlacesMenu(long chatId, long messageId) {
+        return EditMessageText.builder()
+                .chatId(chatId)
+                .messageId(toIntExact(messageId))
+                .text("Decimal Places")
+                .replyMarkup(keyboardCreationService.setDecimalPlacesKeyboard())
+                .build();
+    }
+
     public EditMessageText setNotificationTimeMenu(long chatId, long messageId) {
         return EditMessageText.builder()
                 .chatId(chatId)

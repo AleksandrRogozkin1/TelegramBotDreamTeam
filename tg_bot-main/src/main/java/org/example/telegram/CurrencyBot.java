@@ -113,6 +113,10 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
                         execute(notificationMenuMassage);
                         break;
+                    case "GET_PRECISION_SETTINGS":
+                        EditMessageText precisionMenuMessage = new MenuCreationService().getDecimalPlacesMenu(userId, messageId);
+                        execute(precisionMenuMessage);
+                        break;
                 }
             }
         } catch (TelegramApiException e) {
