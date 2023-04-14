@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class KeyboardCreationService {
     public InlineKeyboardMarkup getMainKeyboard() {
@@ -109,22 +110,6 @@ public class KeyboardCreationService {
                 .findFirst()
                 .orElse(Bank.PRIVATBANK);
     }
-
-    /*
-    private String checkMarkForTime(long userId,) {
-        Bank userTimeSetting = getUserBankSetting(userId);
-        return userTimeSetting == bankName ? bankName + "✅" : bankName.name();
-    }
-
-    private Bank getUserTimeSetting(long userId) {
-        return FileUtils.getUserSettingsDtoList().stream()
-                .filter(user -> user.getUserId() == userId)
-                .map(User::getCurrentBank)
-                .findFirst()
-                .orElse(Bank.PRIVATBANK);
-    }
-    */
-
     private String checkMarkForCurrency(long userId, Currency currencyName) {
         Currency userCurrencySetting = getUserCurrencySetting(userId);
         return userCurrencySetting == currencyName ? currencyName + "✅" : currencyName.name();
@@ -136,5 +121,12 @@ public class KeyboardCreationService {
                 .map(User::getCurrentCurrency)
                 .findFirst()
                 .orElse(org.example.currency.Currency.USD);
+    }
+    private String getUserNotificationSetting(long userId) {
+        return FileUtils.getUserSettingsDtoList().stream()
+                .filter(userSettings -> userSettings.getUserId() == userId)
+                .map(User::getNotificationTime)
+                .map(time -> time.equals("OFF") ? time + "" : time +"✅" )
+                .collect(Collectors.joining());
     }
 }

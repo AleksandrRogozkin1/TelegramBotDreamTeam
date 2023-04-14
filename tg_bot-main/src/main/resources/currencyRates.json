@@ -9,8 +9,8 @@
       "month": 3,
       "dayOfMonth": 14,
       "hourOfDay": 15,
-      "minute": 0,
-      "second": 21
+      "minute": 50,
+      "second": 3
     }
   },
   {
@@ -23,8 +23,8 @@
       "month": 3,
       "dayOfMonth": 14,
       "hourOfDay": 15,
-      "minute": 0,
-      "second": 21
+      "minute": 50,
+      "second": 3
     }
   },
   {
@@ -37,22 +37,22 @@
       "month": 3,
       "dayOfMonth": 14,
       "hourOfDay": 15,
-      "minute": 0,
-      "second": 22
+      "minute": 50,
+      "second": 3
     }
   },
   {
     "bank": "NBU",
     "currency": "EUR",
-    "buy": 40.2639,
-    "sell": 40.2639,
+    "buy": 40.4174,
+    "sell": 40.4174,
     "rateDate": {
       "year": 2023,
       "month": 3,
       "dayOfMonth": 14,
       "hourOfDay": 15,
-      "minute": 0,
-      "second": 22
+      "minute": 50,
+      "second": 3
     }
   },
   {
@@ -65,8 +65,8 @@
       "month": 3,
       "dayOfMonth": 14,
       "hourOfDay": 15,
-      "minute": 0,
-      "second": 22
+      "minute": 50,
+      "second": 4
     }
   },
   {
@@ -79,8 +79,8 @@
       "month": 3,
       "dayOfMonth": 14,
       "hourOfDay": 15,
-      "minute": 0,
-      "second": 22
+      "minute": 50,
+      "second": 4
     }
   }
 ]
