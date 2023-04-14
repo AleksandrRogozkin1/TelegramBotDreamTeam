@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.example.currency.Bank;
 import org.example.currency.Currency;
 
+import javax.management.Notification;
+
 @Getter
 @Setter
 public class User {
@@ -14,6 +16,8 @@ public class User {
     private Currency currentCurrency;
     private Bank currentBank;
     private int decimalPlaces;
+    private String notificationTime;
+
 
     public User(long userId, String username, String registrationDate) {
         this.userId = userId;
@@ -23,5 +27,7 @@ public class User {
         currentCurrency = Currency.USD;
         currentBank = Bank.PRIVATBANK;
         decimalPlaces = 2;
+        notificationTime = "OFF";
     }
+
 }

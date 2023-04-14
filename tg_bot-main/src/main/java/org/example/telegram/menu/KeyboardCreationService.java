@@ -85,7 +85,7 @@ public class KeyboardCreationService {
         return markupInline;
     }
 
-    public InlineKeyboardMarkup getDecimalPlacesKeyboard(long userId) {
+    public InlineKeyboardMarkup getDecimalPlacesKeyboard() {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
         rowsInline.add(createButton("2", "SET_2_DECIMAL"));
@@ -147,4 +147,12 @@ public class KeyboardCreationService {
                 .findFirst()
                 .orElse(org.example.currency.Currency.USD);
     }
+
+//    private String getUserNotificationSetting(long userId) {
+//        return FileUtils.getUserSettingsDtoList().stream()
+//                .filter(userSettings -> userSettings.getUserId() == userId)
+//                .map(User::getNotificationTime)
+//                .map(time -> time.equals("OFF") ? time + "" : time +"✅" )
+//                .collect(Collectors.joining());
+//    }
 }
