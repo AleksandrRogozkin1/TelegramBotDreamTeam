@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.example.currency.Bank;
 import org.example.currency.Currency;
-import org.example.services.PrivatSendRequest;
 import org.example.telegram.menu.MenuCreationService;
 import org.example.user.User;
 import org.example.utils.FileUtils;
@@ -17,19 +16,12 @@ import java.time.LocalDate;
 
 public class CurrencyBot extends TelegramLongPollingBot {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    // Токен та юзернейм телеграм бота
     private static final String BOT_TOKEN = "5609499310:AAGcA0gZX6EeQKy07ALNq_z8_9XvacLJN2Y";
     private static final String BOT_USERNAME = "@CurrencyBotByDreamTeamBot";
 
-    /*
-        Обробник дій
-    */
     @Override
     public void onUpdateReceived(Update update) {
         try {
-            /*
-                Обробник відправленого користувачем тексту
-            */
             if (update.hasMessage() && update.getMessage().hasText()) {
                 long userId = update.getMessage().getChatId(); // отримуємо tg-id юзера
                 String userFirstName = update.getMessage().getFrom().getFirstName(); // отримуємо юзернейм
@@ -39,19 +31,13 @@ public class CurrencyBot extends TelegramLongPollingBot {
                 if (FileUtils.getUserSettingsDtoList().stream().noneMatch(item -> item.getUserId() == userId)) {
                     FileUtils.getUserSettingsDtoList().add(user);
 
-                    // Витягуємо список юзерів з FileUtils та записуєм його у Json
                     FileUtils.saveInfoToJsonFile(GSON.toJson(FileUtils.getUserSettingsDtoList()),
                             FileUtils.getUSER_SETTINGS_FILENAME());
                 }
-
-                // Викликаємо головне меню
                 SendMessage startMenuMessage = new MenuCreationService().getStartMenu(userId);
                 execute(startMenuMessage);
             }
 
-            /*
-                Обробник нажаття на кнопки (Отримати курс валют, налаштування)
-            */
             if (update.hasCallbackQuery()) {
                 long userId = update.getCallbackQuery().getMessage().getChatId();
                 String callData = update.getCallbackQuery().getData();
@@ -60,7 +46,7 @@ public class CurrencyBot extends TelegramLongPollingBot {
 
                 switch (callData) {
                     case "GET_CURRENCY":
-                        outMessage.setText(new PrivatSendRequest().getRate(Currency.USD).toString());
+                        outMessage.setText(FileUtils.getRateByUserSettings(userId));
                         SendMessage startMenuMessage = new MenuCreationService().getStartMenu(userId);
                         execute(outMessage);
                         execute(startMenuMessage);
@@ -74,13 +60,13 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         execute(bankMenuMassage);
                         break;
                     case "SET_MONOBANK":
-                        FileUtils.changeUserCurrentBankData(userId, Bank.MONOBANK);
+                        FileUtils.changeUserSettingsData(userId, user -> user.setCurrentBank(Bank.MONOBANK));
                         break;
                     case "SET_NBU":
-                        FileUtils.changeUserCurrentBankData(userId, Bank.NBU);
+                        FileUtils.changeUserSettingsData(userId, user -> user.setCurrentBank(Bank.NBU));
                         break;
                     case "SET_PRIVATBANK":
-                        FileUtils.changeUserCurrentBankData(userId, Bank.PRIVATBANK);
+                        FileUtils.changeUserSettingsData(userId, user -> user.setCurrentBank(Bank.PRIVATBANK));
                         break;
                     case "GET_SETTINGS":
                     case "GET_BANK_BACK":
@@ -92,21 +78,20 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         execute(currencyMenuMassage);
                         break;
                     case "SET_USD":
-                        FileUtils.changeUserCurrentCurrencyData(userId, Currency.USD);
+                        FileUtils.changeUserSettingsData(userId, user -> user.setCurrentCurrency(Currency.USD));
                         break;
                     case "SET_EUR":
-                        FileUtils.changeUserCurrentCurrencyData(userId, Currency.EUR);
+                        FileUtils.changeUserSettingsData(userId, user -> user.setCurrentCurrency(Currency.EUR));
                         break;
                     case "GET_CURRENCY_BACK":
+                    case "GET_NOTIFICATION_BACK":
                         settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
                         execute(settingsMenuMessage);
                         break;
                     case "GET_NOTIFICATION_SETTINGS":
                         SendMessage notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId);
                         execute(notificationMenuMassage);
-                    case "GET_NOTIFICATION_BACK":
-                        settingsMenuMessage = new MenuCreationService().getSettingsMenu(userId);
-                        execute(settingsMenuMessage);
+                        break;
                 }
             }
         } catch (TelegramApiException e) {
