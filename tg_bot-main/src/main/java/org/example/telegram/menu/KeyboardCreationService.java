@@ -16,6 +16,7 @@ public class KeyboardCreationService {
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
         rowsInline.add(createButton("Get actual currency", "GET_CURRENCY"));
         rowsInline.add(createButton("User settings", "GET_SETTINGS"));
+        rowsInline.add(createButton("ℹ️Information", "GET_INFO"));
         markupInline.setKeyboard(rowsInline);
         return markupInline;
     }
@@ -77,9 +78,9 @@ public class KeyboardCreationService {
     public InlineKeyboardMarkup setDecimalPlacesKeyboard(long userId) {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-        rowsInline.add(createButton(checkMarkForDecimalPlaces(userId,2), "SET_PRECISION_2"));
-        rowsInline.add(createButton(checkMarkForDecimalPlaces(userId,3), "SET_PRECISION_3"));
-        rowsInline.add(createButton(checkMarkForDecimalPlaces(userId,4), "SET_PRECISION_4"));
+        rowsInline.add(createButton(checkMarkForDecimalPlaces(userId, 2), "SET_PRECISION_2"));
+        rowsInline.add(createButton(checkMarkForDecimalPlaces(userId, 3), "SET_PRECISION_3"));
+        rowsInline.add(createButton(checkMarkForDecimalPlaces(userId, 4), "SET_PRECISION_4"));
         rowsInline.add(createButton("◀️Back", "GET_SETTINGS"));
         rowsInline.add(createButton("\uD83C\uDFE0Home", "GET_HOME"));
         markupInline.setKeyboard(rowsInline);
@@ -119,7 +120,7 @@ public class KeyboardCreationService {
 
     private String checkMarkForDecimalPlaces(long userId, int decimalPlaces) {
         int userDecimalPlaces = getUserDecimalSetting(userId);
-        return userDecimalPlaces == decimalPlaces ? decimalPlaces +  "✅" : String.valueOf(decimalPlaces);
+        return userDecimalPlaces == decimalPlaces ? decimalPlaces + "✅" : String.valueOf(decimalPlaces);
     }
 
     private Bank getUserBankSetting(long userId) {
