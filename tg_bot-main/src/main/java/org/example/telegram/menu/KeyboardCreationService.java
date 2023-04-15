@@ -2,8 +2,8 @@ package org.example.telegram.menu;
 
 import org.example.currency.Bank;
 import org.example.currency.Currency;
+import org.example.telegram.CurrencyRateMessageBuilder;
 import org.example.user.User;
-import org.example.utils.FileUtils;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
@@ -113,23 +113,23 @@ public class KeyboardCreationService {
     }
 
     private String checkMarkForCurrency(long userId, Currency currencyName) {
-        Currency userCurrencySetting = getUserCurrencySetting(userId);
-        return userCurrencySetting == currencyName ? currencyName + "✅" : currencyName.name();
+        List<Currency> userCurrencySetting = getUserCurrencySetting(userId);
+        return userCurrencySetting.contains(currencyName) ? currencyName + "✅" : currencyName.name();
     }
 
     private Bank getUserBankSetting(long userId) {
-        return FileUtils.getUserSettingsDtoList().stream()
+        return CurrencyRateMessageBuilder.getUserSettingsDtoList().stream()
                 .filter(user -> user.getUserId() == userId)
                 .map(User::getCurrentBank)
                 .findFirst()
                 .orElse(Bank.PRIVATBANK);
     }
 
-    private Currency getUserCurrencySetting(long userId) {
-        return FileUtils.getUserSettingsDtoList().stream()
+    private List<Currency> getUserCurrencySetting(long userId) {
+        return CurrencyRateMessageBuilder.getUserSettingsDtoList().stream()
                 .filter(userSettings -> userSettings.getUserId() == userId)
                 .map(User::getCurrentCurrency)
                 .findFirst()
-                .orElse(org.example.currency.Currency.USD);
+                .orElse(List.of(Currency.USD));
     }
 }

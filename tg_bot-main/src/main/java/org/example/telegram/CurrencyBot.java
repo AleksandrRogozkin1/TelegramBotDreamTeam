@@ -24,15 +24,13 @@ public class CurrencyBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         try {
             if (update.hasMessage() && update.getMessage().hasText()) {
-                long userId = update.getMessage().getChatId(); // отримуємо tg-id юзера
-                String userFirstName = update.getMessage().getFrom().getFirstName(); // отримуємо юзернейм
-                User user = new User(userId, userFirstName, LocalDate.now().toString()); // створюємо об'єкт юзера
+                long userId = update.getMessage().getChatId();
+                String userFirstName = update.getMessage().getFrom().getFirstName();
+                User user = new User(userId, userFirstName, LocalDate.now().toString());
 
-                // Перевірка, якщо ще немає юзера з таким Telegram ID, то додаєм його у список
-                if (FileUtils.getUserSettingsDtoList().stream().noneMatch(item -> item.getUserId() == userId)) {
-                    FileUtils.getUserSettingsDtoList().add(user);
-
-                    FileUtils.saveInfoToJsonFile(GSON.toJson(FileUtils.getUserSettingsDtoList()),
+                if (CurrencyRateMessageBuilder.getUserSettingsDtoList().stream().noneMatch(item -> item.getUserId() == userId)) {
+                    CurrencyRateMessageBuilder.getUserSettingsDtoList().add(user);
+                    FileUtils.saveInfoToJsonFile(GSON.toJson(CurrencyRateMessageBuilder.getUserSettingsDtoList()),
                             FileUtils.getUSER_SETTINGS_FILENAME());
                 }
                 SendMessage startMenuMessage = new MenuCreationService().getStartMenu(userId);
@@ -49,7 +47,7 @@ public class CurrencyBot extends TelegramLongPollingBot {
 
                 switch (callData) {
                     case "GET_CURRENCY":
-                        outMessage.setText(FileUtils.getRateByUserSettings(userId));
+                        outMessage.setText(CurrencyRateMessageBuilder.getRateByUserSettings(userId));
                         SendMessage startMenuMessage = new MenuCreationService().getStartMenu(userId);
                         execute(outMessage);
                         execute(startMenuMessage);
@@ -63,17 +61,17 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         execute(bankMenuMassage);
                         break;
                     case "SET_MONOBANK":
-                        FileUtils.changeUserSettingsData(userId, user -> user.setCurrentBank(Bank.MONOBANK));
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setCurrentBank(Bank.MONOBANK));
                         bankMenuMassage = new MenuCreationService().getBankMenu(userId, messageId);
                         execute(bankMenuMassage);
                         break;
                     case "SET_NBU":
-                        FileUtils.changeUserSettingsData(userId, user -> user.setCurrentBank(Bank.NBU));
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setCurrentBank(Bank.NBU));
                         bankMenuMassage = new MenuCreationService().getBankMenu(userId, messageId);
                         execute(bankMenuMassage);
                         break;
                     case "SET_PRIVATBANK":
-                        FileUtils.changeUserSettingsData(userId, user -> user.setCurrentBank(Bank.PRIVATBANK));
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setCurrentBank(Bank.PRIVATBANK));
                         bankMenuMassage = new MenuCreationService().getBankMenu(userId, messageId);
                         execute(bankMenuMassage);
                         break;
@@ -87,12 +85,12 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         execute(currencyMenuMassage);
                         break;
                     case "SET_USD":
-                        FileUtils.changeUserSettingsData(userId, user -> user.setCurrentCurrency(Currency.USD));
+                        CurrencyRateMessageBuilder.updateUserCurrencySettings(userId, Currency.USD);
                         currencyMenuMassage = new MenuCreationService().getCurrencyMenu(userId, messageId);
                         execute(currencyMenuMassage);
                         break;
                     case "SET_EUR":
-                        FileUtils.changeUserSettingsData(userId, user -> user.setCurrentCurrency(Currency.EUR));
+                        CurrencyRateMessageBuilder.updateUserCurrencySettings(userId, Currency.EUR);
                         currencyMenuMassage = new MenuCreationService().getCurrencyMenu(userId, messageId);
                         execute(currencyMenuMassage);
                         break;
@@ -118,13 +116,13 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         execute(precisionMenuMessage);
                         break;
                     case "SET_PRECISION_2":
-                        FileUtils.changeUserSettingsData(userId, user -> user.setDecimalPlaces(2));
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setDecimalPlaces(2));
                         break;
                     case "SET_PRECISION_3":
-                        FileUtils.changeUserSettingsData(userId, user -> user.setDecimalPlaces(3));
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setDecimalPlaces(3));
                         break;
                     case "SET_PRECISION_4":
-                        FileUtils.changeUserSettingsData(userId, user -> user.setDecimalPlaces(4));
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setDecimalPlaces(4));
                         break;
                 }
             }

@@ -1,42 +1,14 @@
 [
   {
-    "registrationDate": "2023-04-11",
-    "userId": 5701200573,
-    "username": "Äìèòðî Ìàðêåâè÷",
-    "currentCurrency": "USD",
-    "currentBank": "NBU",
-    "decimalPlaces": 2
-  },
-  {
-    "registrationDate": "2023-04-11",
-    "userId": 547197664,
-    "username": "Bohdan",
-    "currentCurrency": "USD",
-    "currentBank": "NBU",
-    "decimalPlaces": 2
-  },
-  {
-    "registrationDate": "2023-04-12",
-    "userId": 679057443,
-    "username": "Ypich",
-    "currentCurrency": "EUR",
-    "currentBank": "PRIVATBANK",
-    "decimalPlaces": 2
-  },
-  {
-    "registrationDate": "2023-04-13",
-    "userId": 168248404,
-    "username": "Îëåêñàíäð",
-    "currentCurrency": "EUR",
-    "currentBank": "PRIVATBANK",
-    "decimalPlaces": 2
-  },
-  {
-    "registrationDate": "2023-04-14",
+    "registrationDate": "2023-04-15",
     "userId": 1307390733,
     "username": "Remington",
-    "currentCurrency": "USD",
-    "currentBank": "PRIVATBANK",
-    "decimalPlaces": 4
+    "notificationTime": "OFF",
+    "currentCurrency": [
+      "USD",
+      "EUR"
+    ],
+    "currentBank": "NBU",
+    "decimalPlaces": 2
   }
 ]
