@@ -5,10 +5,22 @@
     "username": "Remington",
     "notificationTime": "OFF",
     "currentCurrency": [
+      "EUR",
+      "USD"
+    ],
+    "currentBank": "PRIVATBANK",
+    "decimalPlaces": 3
+  },
+  {
+    "registrationDate": "2023-04-15",
+    "userId": 5701200573,
+    "username": "Дмитро Маркевич",
+    "notificationTime": "OFF",
+    "currentCurrency": [
       "USD",
       "EUR"
     ],
-    "currentBank": "NBU",
+    "currentBank": "PRIVATBANK",
     "decimalPlaces": 2
   }
 ]

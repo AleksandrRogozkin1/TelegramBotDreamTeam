@@ -74,12 +74,12 @@ public class KeyboardCreationService {
         return markupInline;
     }
 
-    public InlineKeyboardMarkup setDecimalPlacesKeyboard() {
+    public InlineKeyboardMarkup setDecimalPlacesKeyboard(long userId) {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-        rowsInline.add(createButton("2", "SET_PRECISION_2"));
-        rowsInline.add(createButton("3", "SET_PRECISION_3"));
-        rowsInline.add(createButton("4", "SET_PRECISION_4"));
+        rowsInline.add(createButton(checkMarkForDecimalPlaces(userId,2), "SET_PRECISION_2"));
+        rowsInline.add(createButton(checkMarkForDecimalPlaces(userId,3), "SET_PRECISION_3"));
+        rowsInline.add(createButton(checkMarkForDecimalPlaces(userId,4), "SET_PRECISION_4"));
         rowsInline.add(createButton("◀️Back", "GET_SETTINGS"));
         rowsInline.add(createButton("\uD83C\uDFE0Home", "GET_HOME"));
         markupInline.setKeyboard(rowsInline);
@@ -117,12 +117,25 @@ public class KeyboardCreationService {
         return userCurrencySetting.contains(currencyName) ? currencyName + "✅" : currencyName.name();
     }
 
+    private String checkMarkForDecimalPlaces(long userId, int decimalPlaces) {
+        int userDecimalPlaces = getUserDecimalSetting(userId);
+        return userDecimalPlaces == decimalPlaces ? decimalPlaces +  "✅" : String.valueOf(decimalPlaces);
+    }
+
     private Bank getUserBankSetting(long userId) {
         return CurrencyRateMessageBuilder.getUserSettingsDtoList().stream()
                 .filter(user -> user.getUserId() == userId)
                 .map(User::getCurrentBank)
                 .findFirst()
                 .orElse(Bank.PRIVATBANK);
+    }
+
+    private int getUserDecimalSetting(long userId) {
+        return CurrencyRateMessageBuilder.getUserSettingsDtoList().stream()
+                .filter(user -> user.getUserId() == userId)
+                .map(User::getDecimalPlaces)
+                .findFirst()
+                .orElse(2);
     }
 
     private List<Currency> getUserCurrencySetting(long userId) {
