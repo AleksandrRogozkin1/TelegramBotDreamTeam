@@ -5,6 +5,9 @@ import lombok.Setter;
 import org.example.currency.Bank;
 import org.example.currency.Currency;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 public class User {
@@ -12,7 +15,7 @@ public class User {
     private long userId;
     private String username;
     private String notificationTime;
-    private Currency currentCurrency;
+    private List<Currency> currentCurrency;
     private Bank currentBank;
     private int decimalPlaces;
 
@@ -20,8 +23,9 @@ public class User {
         this.userId = userId;
         this.username = username;
         this.registrationDate = registrationDate;
-        // Параметри по замовчуванню
-        currentCurrency = Currency.USD;
+        currentCurrency = new ArrayList<>() {{
+            add(Currency.USD);
+        }};
         currentBank = Bank.PRIVATBANK;
         decimalPlaces = 2;
         notificationTime = "OFF";

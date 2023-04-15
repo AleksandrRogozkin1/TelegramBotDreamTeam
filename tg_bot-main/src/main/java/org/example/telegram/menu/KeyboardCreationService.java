@@ -2,8 +2,8 @@ package org.example.telegram.menu;
 
 import org.example.currency.Bank;
 import org.example.currency.Currency;
+import org.example.telegram.CurrencyRateMessageBuilder;
 import org.example.user.User;
-import org.example.utils.FileUtils;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
@@ -39,7 +39,7 @@ public class KeyboardCreationService {
         rowsInline.add(createButton(checkMarkForBank(userId, Bank.NBU), "SET_NBU"));
         rowsInline.add(createButton(checkMarkForBank(userId, Bank.PRIVATBANK), "SET_PRIVATBANK"));
         rowsInline.add(createButton("◀️Back", "GET_BANK_BACK"));
-        rowsInline.add(createButton("Home", "GET_HOME"));
+        rowsInline.add(createButton("\uD83C\uDFE0Home", "GET_HOME"));
         markupInline.setKeyboard(rowsInline);
         return markupInline;
     }
@@ -64,7 +64,7 @@ public class KeyboardCreationService {
         rowInline4.add(InlineKeyboardButton.builder().text("18:00").callbackData("SET_NOTIFICATION_TIME_18").build());
         rowInline4.add(InlineKeyboardButton.builder().text("Switch Notification").callbackData("SWITCH_NOTIFICATION").build());
         rowInline4.add(InlineKeyboardButton.builder().text("◀️Back").callbackData("GET_NOTIFICATION_BACK").build());
-        rowInline5.add(InlineKeyboardButton.builder().text("Home").callbackData("GET_HOME").build());
+        rowInline5.add(InlineKeyboardButton.builder().text("\uD83C\uDFE0Home").callbackData("GET_HOME").build());
         rowsInline.add(rowInline1);
         rowsInline.add(rowInline2);
         rowsInline.add(rowInline3);
@@ -74,14 +74,14 @@ public class KeyboardCreationService {
         return markupInline;
     }
 
-    public InlineKeyboardMarkup setDecimalPlacesKeyboard() {
+    public InlineKeyboardMarkup setDecimalPlacesKeyboard(long userId) {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-        rowsInline.add(createButton("2", "SET_PRECISION_2"));
-        rowsInline.add(createButton("3", "SET_PRECISION_3"));
-        rowsInline.add(createButton("4", "SET_PRECISION_4"));
+        rowsInline.add(createButton(checkMarkForDecimalPlaces(userId,2), "SET_PRECISION_2"));
+        rowsInline.add(createButton(checkMarkForDecimalPlaces(userId,3), "SET_PRECISION_3"));
+        rowsInline.add(createButton(checkMarkForDecimalPlaces(userId,4), "SET_PRECISION_4"));
         rowsInline.add(createButton("◀️Back", "GET_SETTINGS"));
-        rowsInline.add(createButton("Home", "GET_HOME"));
+        rowsInline.add(createButton("\uD83C\uDFE0Home", "GET_HOME"));
         markupInline.setKeyboard(rowsInline);
         return markupInline;
     }
@@ -92,7 +92,7 @@ public class KeyboardCreationService {
         rowsInline.add((createButton(checkMarkForCurrency(userId, Currency.USD), "SET_USD")));
         rowsInline.add((createButton(checkMarkForCurrency(userId, Currency.EUR), "SET_EUR")));
         rowsInline.add((createButton("◀️Back", "GET_CURRENCY_BACK")));
-        rowsInline.add(createButton("Home", "GET_HOME"));
+        rowsInline.add(createButton("\uD83C\uDFE0Home", "GET_HOME"));
         markupInline.setKeyboard(rowsInline);
         return markupInline;
     }
@@ -113,23 +113,36 @@ public class KeyboardCreationService {
     }
 
     private String checkMarkForCurrency(long userId, Currency currencyName) {
-        Currency userCurrencySetting = getUserCurrencySetting(userId);
-        return userCurrencySetting == currencyName ? currencyName + "✅" : currencyName.name();
+        List<Currency> userCurrencySetting = getUserCurrencySetting(userId);
+        return userCurrencySetting.contains(currencyName) ? currencyName + "✅" : currencyName.name();
+    }
+
+    private String checkMarkForDecimalPlaces(long userId, int decimalPlaces) {
+        int userDecimalPlaces = getUserDecimalSetting(userId);
+        return userDecimalPlaces == decimalPlaces ? decimalPlaces +  "✅" : String.valueOf(decimalPlaces);
     }
 
     private Bank getUserBankSetting(long userId) {
-        return FileUtils.getUserSettingsDtoList().stream()
+        return CurrencyRateMessageBuilder.getUserSettingsDtoList().stream()
                 .filter(user -> user.getUserId() == userId)
                 .map(User::getCurrentBank)
                 .findFirst()
                 .orElse(Bank.PRIVATBANK);
     }
 
-    private Currency getUserCurrencySetting(long userId) {
-        return FileUtils.getUserSettingsDtoList().stream()
+    private int getUserDecimalSetting(long userId) {
+        return CurrencyRateMessageBuilder.getUserSettingsDtoList().stream()
+                .filter(user -> user.getUserId() == userId)
+                .map(User::getDecimalPlaces)
+                .findFirst()
+                .orElse(2);
+    }
+
+    private List<Currency> getUserCurrencySetting(long userId) {
+        return CurrencyRateMessageBuilder.getUserSettingsDtoList().stream()
                 .filter(userSettings -> userSettings.getUserId() == userId)
                 .map(User::getCurrentCurrency)
                 .findFirst()
-                .orElse(org.example.currency.Currency.USD);
+                .orElse(List.of(Currency.USD));
     }
 }
