@@ -20,7 +20,7 @@ public class MenuCreationService extends BotCommand {
     public SendMessage getSettingsMenu(long chatId) {
         return SendMessage.builder()
                 .chatId(chatId)
-                .text("Settings")
+                .text("Settings:")
                 .replyMarkup(keyboardCreationService.getSettingsKeyboard())
                 .build();
     }
@@ -29,7 +29,7 @@ public class MenuCreationService extends BotCommand {
         return EditMessageText.builder()
                 .chatId(chatId)
                 .messageId(toIntExact(messageId))
-                .text("Choose Bank")
+                .text("Select a bank:")
                 .replyMarkup(keyboardCreationService.getBankKeyboard(chatId))
                 .build();
     }
@@ -38,7 +38,7 @@ public class MenuCreationService extends BotCommand {
         return EditMessageText.builder()
                 .chatId(chatId)
                 .messageId(toIntExact(messageId))
-                .text("Decimal places")
+                .text("Decimal places:")
                 .replyMarkup(keyboardCreationService.setDecimalPlacesKeyboard(chatId))
                 .build();
     }
@@ -47,7 +47,7 @@ public class MenuCreationService extends BotCommand {
         return EditMessageText.builder()
                 .chatId(chatId)
                 .messageId(toIntExact(messageId))
-                .text("Choose Currency")
+                .text("Select a currency:")
                 .replyMarkup(keyboardCreationService.getCurrencyKeyboard(chatId))
                 .build();
     }
@@ -56,7 +56,7 @@ public class MenuCreationService extends BotCommand {
         return EditMessageText.builder()
                 .chatId(chatId)
                 .messageId(toIntExact(messageId))
-                .text("Choose Time for notification")
+                .text("Select a time for the notification:")
                 .replyMarkup(keyboardCreationService.setNotificationTimeKeyboard())
                 .build();
     }

@@ -68,6 +68,7 @@ public class CurrencyRateMessageBuilder {
                         + "Sell: " + String.format("%." + decimalPlaces + "f", currencyRate.getSell()) + "\n"
                         + "-----------------------------------------\n")
                 .collect(Collectors.joining());
+
         String footer = "Last upd in: " + currencyRates.get(0).getFormattedRateDate();
         return header + body + footer;
     }

@@ -14,11 +14,11 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.time.LocalDate;
+import java.util.ResourceBundle;
 
 public class CurrencyBot extends TelegramLongPollingBot {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final String BOT_TOKEN = "5609499310:AAGcA0gZX6EeQKy07ALNq_z8_9XvacLJN2Y";
-    private static final String BOT_USERNAME = "@CurrencyBotByDreamTeamBot";
+    private final ResourceBundle resourceBundle = ResourceBundle.getBundle("bot");
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -44,11 +44,19 @@ public class CurrencyBot extends TelegramLongPollingBot {
                 SendMessage outMessage = new SendMessage();
                 outMessage.setChatId(userId);
 
-
                 switch (callData) {
                     case "GET_CURRENCY":
                         outMessage.setText(CurrencyRateMessageBuilder.getRateByUserSettings(userId));
                         SendMessage startMenuMessage = new MenuCreationService().getStartMenu(userId);
+                        execute(outMessage);
+                        execute(startMenuMessage);
+                        break;
+                    case "GET_INFO":
+                        startMenuMessage = new MenuCreationService().getStartMenu(userId);
+                        outMessage.setText("This bot tracks exchange rates from multiple banks and provides information on request" +
+                                " or automatically according to a specified schedule.\n\n" +
+                                "To view rates, select \"Get actual currency\" from the main menu.\n\n" +
+                                "Use the \"User settings\" section to configure the bot's operating mode.");
                         execute(outMessage);
                         execute(startMenuMessage);
                         break;
@@ -139,12 +147,12 @@ public class CurrencyBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return BOT_USERNAME;
+        return resourceBundle.getString("bot_username");
     }
 
     @Override
     public String getBotToken() {
-        return BOT_TOKEN;
+        return resourceBundle.getString("bot_token");
     }
 }
 
