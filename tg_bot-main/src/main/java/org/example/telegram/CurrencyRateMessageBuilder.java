@@ -32,11 +32,8 @@ public class CurrencyRateMessageBuilder {
         List<Currency> currency = user.getCurrentCurrency();
         List<CurrencyRateDto> currencyRate = getCurrencyRatesByBankAndCurrencies(bank, currency);
 
-        if (currencyRate == null || isCurrencyRateOutdated(currencyRate)) {
-            updateCurrencyRates();
-            currencyRate = getCurrencyRatesByBankAndCurrencies(bank, currency);
-        }
-        return buildCurrencyRateString(user, currencyRate);
+        if (currencyRate == null || isCurrencyRateOutdated(currencyRate)) updateCurrencyRates();
+        return buildCurrencyRateString(user, getCurrencyRatesByBankAndCurrencies(bank, currency));
     }
 
     public static void updateUserCurrencySettings(long userId, Currency currency) {
@@ -50,7 +47,6 @@ public class CurrencyRateMessageBuilder {
                         user.getCurrentCurrency().remove(currency);
                     }
                 });
-
         FileUtils.saveInfoToJsonFile(GSON.toJson(userSettingsDtoList), FileUtils.getUSER_SETTINGS_FILENAME());
     }
 
