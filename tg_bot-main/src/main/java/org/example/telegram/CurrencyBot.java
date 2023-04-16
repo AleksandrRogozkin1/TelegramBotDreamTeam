@@ -111,11 +111,62 @@ public class CurrencyBot extends TelegramLongPollingBot {
                         EditMessageText notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
                         execute(notificationMenuMassage);
                         break;
+                    case "SET_NOTIFICATION_TIME_09":
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setNotificationTime("9"));
+                        notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
+                        execute(notificationMenuMassage);
+                        break;
+                    case "SET_NOTIFICATION_TIME_10":
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setNotificationTime("10"));
+                        notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
+                        execute(notificationMenuMassage);
+                        break;
+                    case "SET_NOTIFICATION_TIME_11":
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setNotificationTime("11"));
+                        notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
+                        execute(notificationMenuMassage);
+                        break;
+                    case "SET_NOTIFICATION_TIME_12":
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setNotificationTime("12"));
+                        notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
+                        execute(notificationMenuMassage);
+                        break;
+                    case "SET_NOTIFICATION_TIME_13":
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setNotificationTime("13"));
+                        notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
+                        execute(notificationMenuMassage);
+                        break;
+                    case "SET_NOTIFICATION_TIME_14":
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setNotificationTime("14"));
+                        notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
+                        execute(notificationMenuMassage);
+                        break;
+                    case "SET_NOTIFICATION_TIME_15":
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setNotificationTime("15"));
+                        notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
+                        execute(notificationMenuMassage);
+                        break;
+                    case "SET_NOTIFICATION_TIME_16":
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setNotificationTime("16"));
+                        notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
+                        execute(notificationMenuMassage);
+                        break;
+                    case "SET_NOTIFICATION_TIME_17":
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setNotificationTime("17"));
+                        notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
+                        execute(notificationMenuMassage);
+                        break;
+                    case "SET_NOTIFICATION_TIME_18":
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setNotificationTime("18"));
+                        notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
+                        execute(notificationMenuMassage);
+                        break;
                     case "GET_HOME":
                         settingsMenuMessage = new MenuCreationService().getStartMenu(userId);
                         execute(settingsMenuMessage);
                         break;
-                    case "SWITCH_NOTIFICATION":
+                    case "OFF_NOTIFICATION":
+                        CurrencyRateMessageBuilder.updateUserSettings(userId, user -> user.setNotificationTime("OFF"));
                         notificationMenuMassage = new MenuCreationService().setNotificationTimeMenu(userId, messageId);
                         execute(notificationMenuMassage);
                         break;

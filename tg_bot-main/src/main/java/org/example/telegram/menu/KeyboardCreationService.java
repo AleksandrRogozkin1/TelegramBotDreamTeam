@@ -45,7 +45,7 @@ public class KeyboardCreationService {
         return markupInline;
     }
 
-    public InlineKeyboardMarkup setNotificationTimeKeyboard() {
+    public InlineKeyboardMarkup setNotificationTimeKeyboard(long userId) {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
         List<InlineKeyboardButton> rowInline1 = new ArrayList<>();
@@ -53,17 +53,17 @@ public class KeyboardCreationService {
         List<InlineKeyboardButton> rowInline3 = new ArrayList<>();
         List<InlineKeyboardButton> rowInline4 = new ArrayList<>();
         List<InlineKeyboardButton> rowInline5 = new ArrayList<>();
-        rowInline1.add(InlineKeyboardButton.builder().text("09:00").callbackData("SET_NOTIFICATION_TIME_09").build());
-        rowInline1.add(InlineKeyboardButton.builder().text("10:00").callbackData("SET_NOTIFICATION_TIME_10").build());
-        rowInline1.add(InlineKeyboardButton.builder().text("11:00").callbackData("SET_NOTIFICATION_TIME_11").build());
-        rowInline2.add(InlineKeyboardButton.builder().text("12:00").callbackData("SET_NOTIFICATION_TIME_12").build());
-        rowInline2.add(InlineKeyboardButton.builder().text("13:00").callbackData("SET_NOTIFICATION_TIME_13").build());
-        rowInline2.add(InlineKeyboardButton.builder().text("14:00").callbackData("SET_NOTIFICATION_TIME_14").build());
-        rowInline3.add(InlineKeyboardButton.builder().text("15:00").callbackData("SET_NOTIFICATION_TIME_15").build());
-        rowInline3.add(InlineKeyboardButton.builder().text("16:00").callbackData("SET_NOTIFICATION_TIME_16").build());
-        rowInline3.add(InlineKeyboardButton.builder().text("17:00").callbackData("SET_NOTIFICATION_TIME_17").build());
-        rowInline4.add(InlineKeyboardButton.builder().text("18:00").callbackData("SET_NOTIFICATION_TIME_18").build());
-        rowInline4.add(InlineKeyboardButton.builder().text("Switch Notification").callbackData("SWITCH_NOTIFICATION").build());
+        rowInline1.add(InlineKeyboardButton.builder().text(checkMarkForNotificationTime(userId, "09:00")).callbackData("SET_NOTIFICATION_TIME_09").build());
+        rowInline1.add(InlineKeyboardButton.builder().text(checkMarkForNotificationTime(userId, "10:00")).callbackData("SET_NOTIFICATION_TIME_10").build());
+        rowInline1.add(InlineKeyboardButton.builder().text(checkMarkForNotificationTime(userId, "11:00")).callbackData("SET_NOTIFICATION_TIME_11").build());
+        rowInline2.add(InlineKeyboardButton.builder().text(checkMarkForNotificationTime(userId, "12:00")).callbackData("SET_NOTIFICATION_TIME_12").build());
+        rowInline2.add(InlineKeyboardButton.builder().text(checkMarkForNotificationTime(userId, "13:00")).callbackData("SET_NOTIFICATION_TIME_13").build());
+        rowInline2.add(InlineKeyboardButton.builder().text(checkMarkForNotificationTime(userId, "14:00")).callbackData("SET_NOTIFICATION_TIME_14").build());
+        rowInline3.add(InlineKeyboardButton.builder().text(checkMarkForNotificationTime(userId, "15:00")).callbackData("SET_NOTIFICATION_TIME_15").build());
+        rowInline3.add(InlineKeyboardButton.builder().text(checkMarkForNotificationTime(userId, "16:00")).callbackData("SET_NOTIFICATION_TIME_16").build());
+        rowInline3.add(InlineKeyboardButton.builder().text(checkMarkForNotificationTime(userId, "17:00")).callbackData("SET_NOTIFICATION_TIME_17").build());
+        rowInline4.add(InlineKeyboardButton.builder().text(checkMarkForNotificationTime(userId, "18:00")).callbackData("SET_NOTIFICATION_TIME_18").build());
+        rowInline4.add(InlineKeyboardButton.builder().text(checkMarkForNotificationTime(userId,"OFF")).callbackData("OFF_NOTIFICATION").build());
         rowInline4.add(InlineKeyboardButton.builder().text("◀️Back").callbackData("GET_NOTIFICATION_BACK").build());
         rowInline5.add(InlineKeyboardButton.builder().text("\uD83C\uDFE0Home").callbackData("GET_HOME").build());
         rowsInline.add(rowInline1);
@@ -123,12 +123,38 @@ public class KeyboardCreationService {
         return userDecimalPlaces == decimalPlaces ? decimalPlaces + "✅" : String.valueOf(decimalPlaces);
     }
 
+    private String checkMarkForNotificationTime(long userId, String notificationTime) {
+        String formattedNotificationTime;
+        String userNotificationTime = getNotificationTime(userId);
+        if (notificationTime.equals("10:00")) {
+            formattedNotificationTime = notificationTime.substring(0, notificationTime.indexOf(":"));
+            return userNotificationTime.equals(formattedNotificationTime) ? notificationTime + "✅" : notificationTime;
+        }
+        else if(notificationTime.equals("OFF")) {
+            return userNotificationTime.equals("OFF") ? notificationTime + "✅" : notificationTime;
+        }
+        formattedNotificationTime = notificationTime
+                .replaceAll("0", "")
+                .replaceAll(":", "");
+
+        return userNotificationTime.equals(formattedNotificationTime) ? notificationTime + "✅" : notificationTime;
+    }
+
+
     private Bank getUserBankSetting(long userId) {
         return CurrencyRateMessageBuilder.getUserSettingsDtoList().stream()
                 .filter(user -> user.getUserId() == userId)
                 .map(User::getCurrentBank)
                 .findFirst()
                 .orElse(Bank.PRIVATBANK);
+    }
+
+    private String getNotificationTime(long userId) {
+        return CurrencyRateMessageBuilder.getUserSettingsDtoList().stream()
+                .filter(user -> user.getUserId() == userId)
+                .map(User::getNotificationTime)
+                .findFirst()
+                .orElse("OFF");
     }
 
     private int getUserDecimalSetting(long userId) {
