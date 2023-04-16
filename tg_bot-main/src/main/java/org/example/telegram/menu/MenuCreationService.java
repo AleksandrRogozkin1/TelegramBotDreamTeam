@@ -1,7 +1,9 @@
 package org.example.telegram.menu;
 
+import org.example.telegram.CurrencyRateMessageBuilder;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
+import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 
 import static java.lang.Math.toIntExact;
@@ -22,6 +24,14 @@ public class MenuCreationService extends BotCommand {
                 .chatId(chatId)
                 .text("Settings:")
                 .replyMarkup(keyboardCreationService.getSettingsKeyboard())
+                .build();
+    }
+
+    public SendMessage getAutoRateMenu(long chatId) {
+        return SendMessage.builder()
+                .chatId(chatId)
+                .text(CurrencyRateMessageBuilder.getRateByUserSettings(chatId))
+                .replyMarkup(keyboardCreationService.getMainKeyboard())
                 .build();
     }
 
@@ -57,7 +67,7 @@ public class MenuCreationService extends BotCommand {
                 .chatId(chatId)
                 .messageId(toIntExact(messageId))
                 .text("Select a time for the notification:")
-                .replyMarkup(keyboardCreationService.setNotificationTimeKeyboard())
+                .replyMarkup(keyboardCreationService.setNotificationTimeKeyboard(chatId))
                 .build();
     }
 }
