@@ -14,3 +14,13 @@ Telegram api - library for working with Telegram API.
 Lombok is a library for reducing the amount of repetitive code.
 
 # Authors
+
+https://github.com/DmitroMarkevich 
+
+https://github.com/AleksandrRogozkin1
+
+https://github.com/Ypppich
+
+https://github.com/VitSit
+
+https://github.com/ivannikopol86
