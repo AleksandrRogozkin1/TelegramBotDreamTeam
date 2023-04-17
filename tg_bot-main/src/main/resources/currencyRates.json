@@ -7,10 +7,10 @@
     "rateDate": {
       "year": 2023,
       "month": 3,
-      "dayOfMonth": 16,
-      "hourOfDay": 15,
-      "minute": 6,
-      "second": 39
+      "dayOfMonth": 17,
+      "hourOfDay": 14,
+      "minute": 54,
+      "second": 47
     }
   },
   {
@@ -21,10 +21,10 @@
     "rateDate": {
       "year": 2023,
       "month": 3,
-      "dayOfMonth": 16,
-      "hourOfDay": 15,
-      "minute": 6,
-      "second": 39
+      "dayOfMonth": 17,
+      "hourOfDay": 14,
+      "minute": 54,
+      "second": 47
     }
   },
   {
@@ -35,10 +35,10 @@
     "rateDate": {
       "year": 2023,
       "month": 3,
-      "dayOfMonth": 16,
-      "hourOfDay": 15,
-      "minute": 6,
-      "second": 39
+      "dayOfMonth": 17,
+      "hourOfDay": 14,
+      "minute": 54,
+      "second": 47
     }
   },
   {
@@ -49,10 +49,10 @@
     "rateDate": {
       "year": 2023,
       "month": 3,
-      "dayOfMonth": 16,
-      "hourOfDay": 15,
-      "minute": 6,
-      "second": 39
+      "dayOfMonth": 17,
+      "hourOfDay": 14,
+      "minute": 54,
+      "second": 47
     }
   },
   {
@@ -63,24 +63,24 @@
     "rateDate": {
       "year": 2023,
       "month": 3,
-      "dayOfMonth": 16,
-      "hourOfDay": 15,
-      "minute": 6,
-      "second": 39
+      "dayOfMonth": 17,
+      "hourOfDay": 14,
+      "minute": 54,
+      "second": 47
     }
   },
   {
     "bank": "MONOBANK",
     "currency": "EUR",
-    "buy": 40.4,
-    "sell": 41.6008,
+    "buy": 40.3,
+    "sell": 41.5007,
     "rateDate": {
       "year": 2023,
       "month": 3,
-      "dayOfMonth": 16,
-      "hourOfDay": 15,
-      "minute": 6,
-      "second": 39
+      "dayOfMonth": 17,
+      "hourOfDay": 14,
+      "minute": 54,
+      "second": 47
     }
   }
 ]

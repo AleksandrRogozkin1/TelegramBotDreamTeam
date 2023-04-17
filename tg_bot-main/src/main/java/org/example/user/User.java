@@ -23,9 +23,7 @@ public class User {
         this.userId = userId;
         this.username = username;
         this.registrationDate = registrationDate;
-        currentCurrency = new ArrayList<>() {{
-            add(Currency.USD);
-        }};
+        currentCurrency = new ArrayList<>(List.of(Currency.USD));
         currentBank = Bank.PRIVATBANK;
         decimalPlaces = 2;
         notificationTime = "OFF";
