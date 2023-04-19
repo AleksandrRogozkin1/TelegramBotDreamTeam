@@ -12,7 +12,6 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 
-import static org.example.telegram.CurrencyRateMessageBuilder.getCurrencyRateDtoList;
 import static org.example.telegram.CurrencyRateMessageBuilder.getUserSettingsDtoList;
 
 public class AutoNotification extends Thread{
@@ -22,6 +21,9 @@ public class AutoNotification extends Thread{
             LocalTime localTime = LocalTime.now(ZoneId.of("Europe/Kiev"));
             LocalTime nextHour = localTime.plusHours(1).truncatedTo(ChronoUnit.HOURS);
             Duration timeToNextHour = Duration.between(localTime, nextHour);
+            if (timeToNextHour.isNegative()) {
+                timeToNextHour = Duration.ofHours(24).plus(timeToNextHour);
+            }
             if(localTime.getMinute() == 0 && localTime.getHour() >= 9 && localTime.getHour() <= 18) {
                 sendNotification(localTime.getHour());
             }
